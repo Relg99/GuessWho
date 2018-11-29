@@ -19,5 +19,6 @@ public class MenuActivity extends AppCompatActivity {
 
 
         myRef.setValue("Hello, World!");
+        //Ricardo se la come
     }
 }
