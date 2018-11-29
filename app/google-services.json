@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "937727783274",
+    "firebase_url": "https://guesswho-57878.firebaseio.com",
+    "project_id": "guesswho-57878",
+    "storage_bucket": "guesswho-57878.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937727783274:android:d821058a1d1e9015",
+        "android_client_info": {
+          "package_name": "com.rnagames.guesswho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937727783274-1q1kt55n1eh8pe42i6pnk740elg8lfon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rnagames.guesswho",
+            "certificate_hash": "b66434a3c21d37e9d38c86a72548704eb35836b0"
+          }
+        },
+        {
+          "client_id": "937727783274-88akf2lbfmlcsfne7vi3dvph9jgrikjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_CDW0U5N2bZeTRWxYNn-scQ_26zDmg4w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937727783274-88akf2lbfmlcsfne7vi3dvph9jgrikjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
