@@ -18,6 +18,5 @@ public class MenuActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("message");
 
         myRef.setValue("Hello, World!");
-
     }
 }
