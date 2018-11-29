@@ -37,6 +37,7 @@ public class MenuActivity extends AppCompatActivity {
                 Log.d(TAG, "Value is: " + value);
             }
 
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
