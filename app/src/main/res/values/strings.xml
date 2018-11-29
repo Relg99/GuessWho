@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GuessWho</string>
+    <string name="Titulo1">Guess</string>
+    <string name="Titulo2">Who?</string>
+    <string name="bJugar">JUGAR</string>
+    <string name="bLeaderboard">Leaderboard</string>
 </resources>
