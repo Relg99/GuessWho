@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:id="@+id/tvTitulo2"
             android:text="@string/Titulo2"
             android:textSize="70sp"
@@ -78,6 +78,7 @@
         <Button
 
             android:id="@+id/bRegistro"
+            android:onClick="clikRegistro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
