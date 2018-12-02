@@ -26,11 +26,16 @@ public class LogInActivity extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.5),(int)(height*.3));
+        getWindow().setLayout((int)(width*.5),(int)(height*.4));
+    }
+
+    public void clickInicioSesion (View view)
+    {
+
     }
 
 
-    public void clikRegistro (View view)
+    public void clickRegistro (View view)
     {
         try {
 
