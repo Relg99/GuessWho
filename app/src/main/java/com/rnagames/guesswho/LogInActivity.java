@@ -18,7 +18,7 @@ public class LogInActivity extends AppCompatActivity {
 
         Intent i = getIntent();
 
-        res = i.getIntExtra("facnum",-200);
+       // res = i.getIntExtra("facnum",-200);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -40,7 +40,7 @@ public class LogInActivity extends AppCompatActivity {
         try {
 
             Intent i = new Intent(this, RegistroActivity.class);
-            i.putExtra("facnum", res);
+            //i.putExtra("facnum", res);
             // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
 
             startActivity(i);

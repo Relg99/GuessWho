@@ -9,4 +9,5 @@
     <string name="hUsuario">Usuario</string>
     <string name="hContraseña">Contraseña</string>
     <string name="bIniciarSesion">Iniciar Sesion</string>
+    <string name="bRegistroAqui">aquí.</string>
 </resources>

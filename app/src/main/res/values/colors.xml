@@ -10,5 +10,7 @@
 <color name="piel_oscura">#7f5e5e</color>
  <color name="verde">#296030</color>
 
+ <color name="clickText">#17818f</color>
+
 
 </resources>
