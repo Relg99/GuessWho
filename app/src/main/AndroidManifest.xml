@@ -19,7 +19,9 @@
         <activity
             android:name=".LogInActivity"
             android:theme="@style/AppTheme.Custom" />
-        <activity android:name=".RegistroActivity"></activity>
+        <activity android:name=".RegistroActivity" />
+        <activity android:name=".LeaderboardActivity" />
+        <activity android:name=".PersonajesActivity"></activity>
     </application>
 
 </manifest>

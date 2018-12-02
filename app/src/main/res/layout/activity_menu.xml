@@ -47,6 +47,7 @@
 
         <Button
             android:id="@+id/bLeaderBoard"
+            android:onClick="clickLeaderboard"
             android:text="@string/bLeaderboard"
             android:layout_marginTop="50dp"
             android:textSize="20sp"
@@ -69,6 +70,7 @@
 
         <Button
             android:id="@+id/bPersonajes"
+            android:onClick="clickPersonajes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

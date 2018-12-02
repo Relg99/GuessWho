@@ -94,4 +94,38 @@ public class MenuActivity extends AppCompatActivity {
         }
 
     }
+
+    public void clickLeaderboard (View view)
+    {
+        try {
+
+            Intent i = new Intent(this, LeaderboardActivity.class);
+            i.putExtra("facnum", res);
+            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
+
+            startActivity(i);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void clickPersonajes (View view)
+    {
+        try {
+
+            Intent i = new Intent(this, PersonajesActivity.class);
+            i.putExtra("facnum", res);
+            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
+
+            startActivity(i);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
