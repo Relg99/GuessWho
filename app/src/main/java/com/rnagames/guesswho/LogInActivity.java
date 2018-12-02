@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public class LogInActivity extends AppCompatActivity {
@@ -18,7 +19,7 @@ public class LogInActivity extends AppCompatActivity {
 
         Intent i = getIntent();
 
-       // res = i.getIntExtra("facnum",-200);
+        // res = i.getIntExtra("facnum",-200);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -26,7 +27,7 @@ public class LogInActivity extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout(500,700);
+        getWindow().setLayout((int)(WindowManager.LayoutParams.WRAP_CONTENT),(int)(WindowManager.LayoutParams.WRAP_CONTENT));
     }
 
     public void clickInicioSesion (View view)
