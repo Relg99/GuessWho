@@ -4,4 +4,8 @@
     <string name="Titulo2">Who?</string>
     <string name="bJugar">JUGAR</string>
     <string name="bLeaderboard">Leaderboard</string>
+    <string name="bPersonajes">Personajes</string>
+    <string name="bRegistro">Registro</string>
+    <string name="hUsuario">Usuario</string>
+    <string name="hContraseña">Contraseña</string>
 </resources>

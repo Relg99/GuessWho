@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MenuActivity"
+
     android:orientation="vertical">
 
     <LinearLayout
+        android:gravity="center|bottom"
+
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
         <TextView
             android:id="@+id/tvTitulo1"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="100sp"
-            android:text="@string/Titulo1"
             android:textSize="70sp"
+            android:text="@string/Titulo1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginLeft="50dp"
             android:id="@+id/tvTitulo2"
-            android:layout_marginStart="200dp"
             android:text="@string/Titulo2"
             android:textSize="70sp"
             android:layout_width="wrap_content"
@@ -30,16 +31,17 @@
     </LinearLayout>
 
     <LinearLayout
+        android:gravity="center|bottom"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
         <Button
             android:id="@+id/bJugar"
             android:onClick="clikJugar"
             android:text="@string/bJugar"
             android:textSize="45sp"
-            android:layout_marginStart="120dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -48,7 +50,6 @@
             android:text="@string/bLeaderboard"
             android:layout_marginTop="50dp"
             android:textSize="20sp"
-            android:layout_marginStart="125dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -56,24 +57,33 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:gravity="end|bottom"
+        android:orientation="horizontal"
+
+        >
+
 
         <Button
             android:id="@+id/bPersonajes"
-            android:text="Per..."
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/bPersonajes" />
+
         <Button
+
             android:id="@+id/bRegistro"
-            android:layout_marginStart="200dp"
-            android:text="Registro"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/bRegistro" />
+    </RelativeLayout>
 
 
 </LinearLayout>

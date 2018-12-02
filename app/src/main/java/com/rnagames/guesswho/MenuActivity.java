@@ -67,7 +67,7 @@ public class MenuActivity extends AppCompatActivity {
 
             Intent i = new Intent(this, LogInActivity.class);
             i.putExtra("facnum", res);
-            Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
 
             startActivity(i);
         }
