@@ -8,4 +8,5 @@
     <string name="bRegistro">Registro</string>
     <string name="hUsuario">Usuario</string>
     <string name="hContraseña">Contraseña</string>
+    <string name="bIniciarSesion">Iniciar Sesion</string>
 </resources>

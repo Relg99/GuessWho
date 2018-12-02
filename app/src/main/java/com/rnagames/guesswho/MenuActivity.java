@@ -77,4 +77,21 @@ public class MenuActivity extends AppCompatActivity {
         }
 
     }
+
+    public void clikRegistro (View view)
+    {
+        try {
+
+            Intent i = new Intent(this, RegistroActivity.class);
+            i.putExtra("facnum", res);
+            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
+
+            startActivity(i);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
