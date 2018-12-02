@@ -66,7 +66,7 @@ public class MenuActivity extends AppCompatActivity {
         try {
 
             Intent i = new Intent(this, LogInActivity.class);
-            i.putExtra("facnum", res);
+            //i.putExtra("facnum", res);
            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
 
             startActivity(i);
