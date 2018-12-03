@@ -11,6 +11,7 @@
  <color name="verde">#296030</color>
 
  <color name="clickText">#17818f</color>
+ <color name="tvLoginErrorColor">#f22f32</color>
 
 
 </resources>

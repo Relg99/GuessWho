@@ -14,11 +14,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
+
         <LinearLayout
            android:layout_margin="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvLoginError"
+                android:textColor="@color/tvLoginErrorColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
             <EditText
 
                 android:gravity="center"

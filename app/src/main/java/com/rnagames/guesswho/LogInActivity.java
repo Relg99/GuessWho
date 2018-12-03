@@ -10,12 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -26,10 +24,9 @@ import java.util.Map;
 
 public class LogInActivity extends AppCompatActivity {
     public String URL = "https://guess-who-223421.appspot.com/login.php";
-    // public int res = 1;
     EditText etUsuario, etPass;
-    public String usuario, pass;
-
+    TextView tvLoginError;
+    boolean loginCorrecto=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +34,7 @@ public class LogInActivity extends AppCompatActivity {
 
         etUsuario = findViewById(R.id.etUsuario);
         etPass = findViewById(R.id.etContraseña);
+        tvLoginError=findViewById(R.id.tvLoginError);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -44,18 +42,26 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void clickInicioSesion(View view) {
+        tvLoginError.setText("");
+
         if (etPass.getText().toString().equals("") || etUsuario.getText().toString().equals("")) {
-            Toast.makeText(this, "No dejes nada vacio", Toast.LENGTH_SHORT).show();
-            //LLENAMELA PAPI
+            tvLoginError.setText("No dejes espacios vacíos.");
 
         } else {
+
+
             StringRequest postRequest = new StringRequest(Request.Method.POST, URL,
                     new Response.Listener<String>()
                     {
                         @Override
                         public void onResponse(String response) {
                             // response
-                            Toast.makeText(LogInActivity.this, response, Toast.LENGTH_SHORT).show();
+                        if(response.equals("1")){
+                            loginCorrecto=true;
+                            finish();
+                        }else{
+                            tvLoginError.setText("Verifica tus credenciales.");
+                        }
                         }
                     },
                     new Response.ErrorListener()
@@ -81,12 +87,12 @@ public class LogInActivity extends AppCompatActivity {
 
               pide.add(postRequest);
         }
+
+
     }
 
-    public void clickRegistro (View view)
-    {
+    public void clickRegistro (View view) {
         try {
-
             Intent i = new Intent(this, RegistroActivity.class);
             startActivity(i);
         }
