@@ -55,10 +55,11 @@ public class LogInActivity extends AppCompatActivity {
                     {
                         @Override
                         public void onResponse(String response) {
-                            // response
                         if(response.equals("1")){
                             loginCorrecto=true;
-                            finish();
+                            Intent i = new Intent(LogInActivity.this, activity_lobby.class);
+                            i.putExtra("gamertag", etUsuario.getText().toString());
+                            startActivity(i);
                         }else{
                             tvLoginError.setText("Verifica tus credenciales.");
                         }

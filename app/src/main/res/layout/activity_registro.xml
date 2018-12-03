@@ -83,7 +83,7 @@
 
     <TextView
         android:id="@+id/tvContraseñaIntento2"
-        android:text="Vuelva a ingrasarla :"
+        android:text="Vuelva a ingresarla :"
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
