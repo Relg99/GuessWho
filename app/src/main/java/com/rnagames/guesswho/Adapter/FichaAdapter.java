@@ -67,6 +67,7 @@ import java.util.ArrayList;
 
                 /*
                 Aqui va donde se pondra la informacion recopilada.
+
                  */
 
             }

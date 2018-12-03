@@ -59,6 +59,7 @@ public class activity_lobby extends AppCompatActivity {
               Map<String, String>  params = new HashMap<String, String>();
               params.put("gamertag", gamertag);
 
+
               return params;
           }
       };
