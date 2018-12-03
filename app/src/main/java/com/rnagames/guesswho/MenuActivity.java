@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MENSAJEEEE";
-
+    public String gamertag;
     public int res = 1;
 
 
@@ -28,7 +28,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         String nombreUsuario = "Ricardo";
-
+        Bundle recibirUsuario = getIntent().getExtras();
+        checkInicioSesion(recibirUsuario);
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
@@ -37,11 +38,6 @@ public class MenuActivity extends AppCompatActivity {
 
         animalRef.setValue("Blanco");
         crearPartidaRef.setValue(1);
-        //myRef.setValue("Hello, World!");
-
-        //Esto si es importante!
-
-        // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -126,5 +122,10 @@ public class MenuActivity extends AppCompatActivity {
             Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public void checkInicioSesion(Bundle recibirUsuario){
+        if(recibirUsuario != null) {
+            gamertag = recibirUsuario.getString("gamertag");
+        }
     }
 }
