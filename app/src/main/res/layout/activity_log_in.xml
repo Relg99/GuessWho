@@ -48,10 +48,13 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:textAllCaps="false"
+                    android:onClick="clickInicioSesion"
                     android:id="@+id/bIniciarSesion"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/bIniciarSesion"
+            android:textSize="12dp"
                     />
 
 
