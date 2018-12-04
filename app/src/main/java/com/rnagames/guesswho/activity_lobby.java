@@ -21,6 +21,9 @@ public class activity_lobby extends AppCompatActivity {
     String getNivelURL="https://guess-who-223421.appspot.com/getNivel.php";
         String gamertag;
         TextView tvGamertag,tvNivel;
+
+        public int res ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,11 @@ public class activity_lobby extends AppCompatActivity {
         gamertag = recibirUsuario.getString("gamertag");
         tvGamertag.setText(gamertag);
         getNivel(gamertag);
+
+        Intent i = getIntent();
+
+        res = i.getIntExtra("facnum",-200);
+
 
     }
 
@@ -56,7 +64,7 @@ public class activity_lobby extends AppCompatActivity {
           @Override
           protected Map<String, String> getParams()
           {
-              Map<String, String>  params = new HashMap<String, String>();
+              Map<String, String>  params = new HashMap<>();
               params.put("gamertag", gamertag);
 
 

@@ -49,8 +49,6 @@ public class RegistroActivity extends AppCompatActivity {
         etContrasena1 = findViewById(R.id.etContraseñaIntento1);
         etContrasena2 = findViewById(R.id.etContraseñaIntento2);
 
-
-
         Intent i = getIntent();
 
         res = i.getIntExtra("facnum",-200);
@@ -200,6 +198,18 @@ public class RegistroActivity extends AppCompatActivity {
 
             pide.add(postRequest);
         //----------------------------------------------
+
+        try {
+            Intent i = new Intent(this, LogInActivity.class);
+             i.putExtra("facnum", res);
+             Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
+
+            startActivity(i);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void clickCancelar (View view)
