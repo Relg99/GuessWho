@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegistroActivity"
+    android:fillViewport="true"
+    >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
-
     <TextView
         android:id="@+id/tvRegistroTitulo"
         android:text="Registro"
@@ -26,7 +30,7 @@
         android:id="@+id/etNombre"
         android:maxLines="1"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tvApellido"
@@ -39,7 +43,7 @@
         android:id="@+id/etApellido"
         android:maxLines="1"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tvGamerTag"
@@ -52,7 +56,7 @@
         android:id="@+id/etGamerTag"
         android:maxLines="1"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tvCorreo"
@@ -65,7 +69,7 @@
         android:id="@+id/etCorreo"
         android:maxLines="1"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tvContraseñaIntento1"
@@ -78,7 +82,7 @@
         android:id="@+id/etContraseñaIntento1"
         android:maxLines="1"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:inputType="textPassword"/>
 
     <TextView
@@ -92,7 +96,7 @@
         android:id="@+id/etContraseñaIntento2"
         android:maxLines="1"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:inputType="textPassword"/>
 
     <RelativeLayout
@@ -121,7 +125,7 @@
             android:textSize="15dp" />
 
     </RelativeLayout>
-
-
-
 </LinearLayout>
+
+
+</ScrollView>
