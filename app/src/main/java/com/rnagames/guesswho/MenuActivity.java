@@ -122,6 +122,7 @@ public class MenuActivity extends AppCompatActivity {
 
     }
     public void checkInicioSesion(Bundle recibirUsuario){
+
         if(recibirUsuario != null) {
             gamertag = recibirUsuario.getString("gamertag");
             sesionIniciada=true;
@@ -129,10 +130,6 @@ public class MenuActivity extends AppCompatActivity {
                 Intent i = new Intent(MenuActivity.this, activity_lobby.class);
                 i.putExtra("gamertag", gamertag);
                 startActivity(i);
-
-
-
-
             }
 
 
