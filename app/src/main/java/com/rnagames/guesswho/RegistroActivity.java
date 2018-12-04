@@ -36,7 +36,7 @@ public class RegistroActivity extends AppCompatActivity {
     public String URLSubir = "http://guess-who-223421.appspot.com/SubirRegistro.php";
     public String sContrasena1, sContrasena2;
 
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
