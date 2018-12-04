@@ -29,10 +29,12 @@ public class RegistroActivity extends AppCompatActivity {
     public int res;
     public static final String TAG = "MENSAJEEEE";
 
-    EditText etNombre, etApellido, etGamerTag, etCorreo, etContraseña1, etContraseña2;
+    EditText etNombre, etApellido, etGamerTag, etCorreo, etContrasena1, etContrasena2;
 
-    public boolean GamerTagExistente=false,CorreoExistente=false;
-    public String URL = "http://192.168.56.1/ejercicios/PM/ChecarDuplicado.php";
+    public boolean GamerTagExistente=false,CorreoExistente=false,ContrasenasCoinciden = false;
+    public String URLCheck = "http://guess-who-223421.appspot.com/ChecarDuplicado.php";
+    public String URLSubir = "http://guess-who-223421.appspot.com/SubirRegistro.php";
+    public String sContrasena1, sContrasena2;
 
 
     @Override
@@ -44,8 +46,8 @@ public class RegistroActivity extends AppCompatActivity {
         etApellido = findViewById(R.id.etApellido);
         etGamerTag = findViewById(R.id.etGamerTag);
         etCorreo = findViewById(R.id.etCorreo);
-        etContraseña1 = findViewById(R.id.etContraseñaIntento1);
-        etContraseña2 = findViewById(R.id.etContraseñaIntento2);
+        etContrasena1 = findViewById(R.id.etContraseñaIntento1);
+        etContrasena2 = findViewById(R.id.etContraseñaIntento2);
 
 
 
@@ -81,14 +83,13 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void clickVerificar (View view)
     {
-        if (etNombre.getText().toString().equals("")||etApellido.getText().toString().equals("")||etGamerTag.getText().toString().equals("")||etCorreo.getText().toString().equals("")||etContraseña1.getText().toString().equals("")||etContraseña2.getText().toString().equals(""))
+        if (etNombre.getText().toString().equals("")||etApellido.getText().toString().equals("")||etGamerTag.getText().toString().equals("")||etCorreo.getText().toString().equals("")||etContrasena1.getText().toString().equals("")||etContrasena2.getText().toString().equals(""))
         {
             Toast.makeText(this,"No ha completado todos los datos.",Toast.LENGTH_SHORT).show();
         }
         else {
 
-
-            StringRequest postRequest = new StringRequest(Request.Method.POST, URL,
+            StringRequest postRequest = new StringRequest(Request.Method.POST, URLCheck,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -114,6 +115,11 @@ public class RegistroActivity extends AppCompatActivity {
                                 case "00":
                                     GamerTagExistente = false;
                                     CorreoExistente = false;
+                                    checarContrasenas();
+                                    if (ContrasenasCoinciden)
+                                    {
+                                        subirDatos();
+                                    }
                                     break;
                             }
                         }
@@ -128,18 +134,72 @@ public class RegistroActivity extends AppCompatActivity {
             ) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
                     params.put("gamertag", etGamerTag.getText().toString());
                     params.put("correo", etCorreo.getText().toString());
 
                     return params;
                 }
+
             };
             RequestQueue pide = Volley.newRequestQueue(this);
 
             pide.add(postRequest);
         }
 
+    }
+
+    public void checarContrasenas ()
+    {
+        sContrasena1 = etContrasena1.getText().toString();
+        sContrasena2 = etContrasena2.getText().toString();
+        if (sContrasena1.equals(sContrasena2))
+        {
+            ContrasenasCoinciden = true;
+        }
+        else
+        {
+            Toast.makeText(this,"Sus contraseñas no coinciden.",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void subirDatos ()
+    {
+
+            StringRequest postRequest = new StringRequest(Request.Method.POST, URLSubir,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Toast.makeText(RegistroActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+
+                    params.put("sNombre",etNombre.getText().toString());
+                    params.put("sApellido",etApellido.getText().toString());
+                    params.put("sGamerTag",etGamerTag.getText().toString());
+                    params.put("sCorreo",etCorreo.getText().toString());
+                    params.put("sContraseña1",etContrasena1.getText().toString());
+
+                    return params;
+                }
+
+            };
+            RequestQueue pide = Volley.newRequestQueue(this);
+
+            pide.add(postRequest);
+        //----------------------------------------------
     }
 
     public void clickCancelar (View view)
