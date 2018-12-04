@@ -9,21 +9,31 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegistroActivity extends AppCompatActivity {
 
     public int res;
     public static final String TAG = "MENSAJEEEE";
 
-    TextView tvNombre,tvApellido,tvGamerTag, tvCorreo, tvContraseña1, getTvContraseña2;
     EditText etNombre, etApellido, etGamerTag, etCorreo, etContraseña1, etContraseña2;
 
-    String sNombre, sApellido, sGamerTag, sCorreo, sContraseña1, sContraseña2;
+    public boolean GamerTagExistente=false,CorreoExistente=false;
+    public String URL = "http://192.168.56.1/ejercicios/PM/ChecarDuplicado.php";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +85,59 @@ public class RegistroActivity extends AppCompatActivity {
         {
             Toast.makeText(this,"No ha completado todos los datos.",Toast.LENGTH_SHORT).show();
         }
-        else
-        {
+        else {
 
+
+            StringRequest postRequest = new StringRequest(Request.Method.POST, URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            switch (response) {
+                                case "11":
+                                    GamerTagExistente = true;
+                                    CorreoExistente = true;
+                                    Toast.makeText(RegistroActivity.this, "Tu Gamer Tag y Correo ya estan vinculados a una cuenta.", Toast.LENGTH_SHORT).show();
+                                    break;
+
+                                case "10":
+                                    GamerTagExistente = true;
+                                    CorreoExistente = false;
+                                    Toast.makeText(RegistroActivity.this, "El gamer tag ya esta en uso.", Toast.LENGTH_SHORT).show();
+                                    break;
+
+                                case "01":
+                                    CorreoExistente = true;
+                                    GamerTagExistente = false;
+                                    Toast.makeText(RegistroActivity.this, "Tu correo ya esta vinculado a una cuenta.", Toast.LENGTH_SHORT).show();
+                                    break;
+
+                                case "00":
+                                    GamerTagExistente = false;
+                                    CorreoExistente = false;
+                                    break;
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Toast.makeText(RegistroActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("gamertag", etGamerTag.getText().toString());
+                    params.put("correo", etCorreo.getText().toString());
+
+                    return params;
+                }
+            };
+            RequestQueue pide = Volley.newRequestQueue(this);
+
+            pide.add(postRequest);
         }
 
     }
