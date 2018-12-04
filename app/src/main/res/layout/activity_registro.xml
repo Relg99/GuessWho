@@ -27,6 +27,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:inputType="text"
         android:id="@+id/etNombre"
         android:maxLines="1"
         android:layout_width="match_parent"
@@ -40,6 +41,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:inputType="text"
         android:id="@+id/etApellido"
         android:maxLines="1"
         android:layout_width="match_parent"
@@ -53,6 +55,7 @@
         android:layout_height="wrap_content"/>
 
     <EditText
+        android:inputType="text"
         android:id="@+id/etGamerTag"
         android:maxLines="1"
         android:layout_width="match_parent"
@@ -61,11 +64,13 @@
     <TextView
         android:id="@+id/tvCorreo"
         android:text="Correo :"
+        android:inputType="textEmailAddress"
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
+        android:inputType="text"
         android:id="@+id/etCorreo"
         android:maxLines="1"
         android:layout_width="match_parent"
@@ -79,6 +84,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+
         android:id="@+id/etContraseñaIntento1"
         android:maxLines="1"
         android:layout_width="match_parent"
@@ -93,6 +99,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+
         android:id="@+id/etContraseñaIntento2"
         android:maxLines="1"
         android:layout_width="match_parent"

@@ -31,7 +31,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     EditText etNombre, etApellido, etGamerTag, etCorreo, etContrasena1, etContrasena2;
 
-    public boolean GamerTagExistente=false,CorreoExistente=false,ContrasenasCoinciden = false;
+    public boolean GamerTagExistente=false,CorreoExistente=false,ContrasenasCoinciden = false,correoValidado=false;
     public String URLCheck = "http://guess-who-223421.appspot.com/ChecarDuplicado.php";
     public String URLSubir = "http://guess-who-223421.appspot.com/SubirRegistro.php";
     public String sContrasena1, sContrasena2;
@@ -51,7 +51,6 @@ public class RegistroActivity extends AppCompatActivity {
 
         Intent i = getIntent();
 
-        res = i.getIntExtra("facnum",-200);
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -114,7 +113,8 @@ public class RegistroActivity extends AppCompatActivity {
                                     GamerTagExistente = false;
                                     CorreoExistente = false;
                                     checarContrasenas();
-                                    if (ContrasenasCoinciden)
+                                    checarEmail();
+                                    if (ContrasenasCoinciden&&correoValidado)
                                     {
                                         subirDatos();
                                     }
@@ -161,7 +161,22 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
     }
+    public void checarEmail(){
 
+        String email = etCorreo.getText().toString().trim();
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if (email.matches(emailPattern))
+        {
+        correoValidado=true;
+        }
+        else {
+            Toast.makeText(this, "Email invalido!", Toast.LENGTH_SHORT).show();
+            correoValidado=false;
+
+        }
+    }
     public void subirDatos ()
     {
 
@@ -200,9 +215,9 @@ public class RegistroActivity extends AppCompatActivity {
         //----------------------------------------------
 
         try {
-            Intent i = new Intent(this, LogInActivity.class);
-             i.putExtra("facnum", res);
-             Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, MenuActivity.class);
+             i.putExtra("gamertag", etGamerTag.getText().toString());
+            i.putExtra("lobby",0);
 
             startActivity(i);
         }

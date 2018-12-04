@@ -20,7 +20,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MENSAJEEEE";
     public String gamertag;
     public int res = 1;
-    public boolean sesionIniciada=false;
+    public boolean sesionIniciada = false;
     public Button bRegistro;
 
     @Override
@@ -28,7 +28,7 @@ public class MenuActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        bRegistro=findViewById(R.id.bRegistro);
+        bRegistro = findViewById(R.id.bRegistro);
         String nombreUsuario = "Ricardo";
         Bundle recibirUsuario = getIntent().getExtras();
         checkInicioSesion(recibirUsuario);
@@ -36,7 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         DatabaseReference animalRef = database.getReference("Animal/Gato");
-        DatabaseReference crearPartidaRef = database.getReference("Juego/"+nombreUsuario);
+        DatabaseReference crearPartidaRef = database.getReference("Juego/" + nombreUsuario);
 
         animalRef.setValue("Blanco");
         crearPartidaRef.setValue(1);
@@ -60,78 +60,76 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    public void clikJugar (View view) {
-        if(sesionIniciada==false) {
+    public void clikJugar(View view) {
+        if (sesionIniciada == false) {
             try {
                 Intent i = new Intent(this, LogInActivity.class);
                 startActivity(i);
             } catch (Exception e) {
                 Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Intent i = new Intent(this, activity_lobby.class);
             i.putExtra("gamertag", gamertag);
             startActivity(i);
         }
     }
 
-    public void clikRegistro (View view) {
-        if(sesionIniciada==false) {
+    public void clikRegistro(View view) {
+        if (sesionIniciada == false) {
             try {
                 Intent i = new Intent(this, RegistroActivity.class);
                 startActivity(i);
             } catch (Exception e) {
                 Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             bRegistro.setText("Registro");
-            sesionIniciada=false;
+            sesionIniciada = false;
             Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void clickLeaderboard (View view) {
+    public void clickLeaderboard(View view) {
         try {
 
             Intent i = new Intent(this, LeaderboardActivity.class);
-           // i.putExtra("facnum", res);
+            // i.putExtra("facnum", res);
             // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
 
             startActivity(i);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void clickPersonajes (View view) {
+    public void clickPersonajes(View view) {
         try {
             Intent i = new Intent(this, PersonajesActivity.class);
-           // i.putExtra("facnum", res);
+            // i.putExtra("facnum", res);
             // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
 
             startActivity(i);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
         }
 
     }
-    public void checkInicioSesion(Bundle recibirUsuario){
 
-        if(recibirUsuario != null) {
+    public void checkInicioSesion(Bundle recibirUsuario) {
+
+        if (recibirUsuario != null) {
             gamertag = recibirUsuario.getString("gamertag");
-            sesionIniciada=true;
+            sesionIniciada = true;
             bRegistro.setText("Cerrar Sesion");
+            if (recibirUsuario.getInt("lobby") == 1) {
                 Intent i = new Intent(MenuActivity.this, activity_lobby.class);
                 i.putExtra("gamertag", gamertag);
                 startActivity(i);
             }
-
+        }
 
 
     }

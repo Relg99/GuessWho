@@ -59,6 +59,8 @@ public class LogInActivity extends AppCompatActivity {
                             loginCorrecto=true;
                             Intent i = new Intent(LogInActivity.this, MenuActivity.class);
                             i.putExtra("gamertag", etUsuario.getText().toString());
+                            i.putExtra("lobby",1);
+
                             startActivity(i);
                         }else{
                             tvLoginError.setText("Verifica tus credenciales.");
