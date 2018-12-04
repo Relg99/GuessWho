@@ -57,7 +57,7 @@ public class LogInActivity extends AppCompatActivity {
                         public void onResponse(String response) {
                         if(response.equals("1")){
                             loginCorrecto=true;
-                            Intent i = new Intent(LogInActivity.this, activity_lobby.class);
+                            Intent i = new Intent(LogInActivity.this, MenuActivity.class);
                             i.putExtra("gamertag", etUsuario.getText().toString());
                             startActivity(i);
                         }else{

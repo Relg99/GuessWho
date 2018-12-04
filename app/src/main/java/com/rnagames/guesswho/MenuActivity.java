@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,14 +20,15 @@ public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MENSAJEEEE";
     public String gamertag;
     public int res = 1;
-
-
+    public boolean sesionIniciada=false;
+    public Button bRegistro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        bRegistro=findViewById(R.id.bRegistro);
         String nombreUsuario = "Ricardo";
         Bundle recibirUsuario = getIntent().getExtras();
         checkInicioSesion(recibirUsuario);
@@ -58,40 +60,38 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    public void clikJugar (View view)
-    {
-        try {
-
-            Intent i = new Intent(this, LogInActivity.class);
-
+    public void clikJugar (View view) {
+        if(sesionIniciada==false) {
+            try {
+                Intent i = new Intent(this, LogInActivity.class);
+                startActivity(i);
+            } catch (Exception e) {
+                Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Intent i = new Intent(this, activity_lobby.class);
+            i.putExtra("gamertag", gamertag);
             startActivity(i);
         }
-        catch (Exception e)
-        {
-            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
+    }
+
+    public void clikRegistro (View view) {
+        if(sesionIniciada==false) {
+            try {
+                Intent i = new Intent(this, RegistroActivity.class);
+                startActivity(i);
+            } catch (Exception e) {
+                Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            bRegistro.setText("Registro");
+            sesionIniciada=false;
+            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void clikRegistro (View view)
-    {
-        try {
-
-            Intent i = new Intent(this, RegistroActivity.class);
-           //i.putExtra("facnum", res);
-            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
-
-            startActivity(i);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    public void clickLeaderboard (View view)
-    {
+    public void clickLeaderboard (View view) {
         try {
 
             Intent i = new Intent(this, LeaderboardActivity.class);
@@ -107,10 +107,8 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    public void clickPersonajes (View view)
-    {
+    public void clickPersonajes (View view) {
         try {
-
             Intent i = new Intent(this, PersonajesActivity.class);
            // i.putExtra("facnum", res);
             // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
@@ -126,6 +124,18 @@ public class MenuActivity extends AppCompatActivity {
     public void checkInicioSesion(Bundle recibirUsuario){
         if(recibirUsuario != null) {
             gamertag = recibirUsuario.getString("gamertag");
-        }
+            sesionIniciada=true;
+            bRegistro.setText("Cerrar Sesion");
+                Intent i = new Intent(MenuActivity.this, activity_lobby.class);
+                i.putExtra("gamertag", gamertag);
+                startActivity(i);
+
+
+
+
+            }
+
+
+
     }
 }

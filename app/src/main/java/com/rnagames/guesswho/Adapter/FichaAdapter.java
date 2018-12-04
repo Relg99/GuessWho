@@ -11,7 +11,7 @@ import com.rnagames.guesswho.Pojos.Pojo_Personajes;
 import com.rnagames.guesswho.R;
 
 import java.util.ArrayList;
-
+/*
 public class FichaAdapter {
 
 package com.rnagames.guesswho.Adapter;
@@ -37,7 +37,7 @@ import java.util.ArrayList;
         @NonNull
         @Override
         public FichaHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View vista = View.inflate(contexto,R.layout./* Aqui va el layout del boton unirse*/,null);
+            View vista = View.inflate(contexto,R.layout. *Aqui va el layout del boton unirse*,null);
             FichaHolder F =  new FichaHolder(vista);
             return F;
         }
@@ -45,10 +45,10 @@ import java.util.ArrayList;
         @Override
         public void onBindViewHolder(@NonNull FichaHolder holder, int position) {
             holder.tvNombre.setText(datos.get(position).getNombre());
-            /*
+
             Aqui va los datos que se pondran en la lista de unirse.
 
-             */
+
         }
 
         @Override
@@ -65,13 +65,14 @@ import java.util.ArrayList;
                 tvNombre = itemView.findViewById(R.id.tvNombre);
                 tvApellido = itemView.findViewById(R.id.tvApellido);
 
-                /*
+
                 Aqui va donde se pondra la informacion recopilada.
 
-                 */
+
 
             }
         }
     }
 
 }
+*/
