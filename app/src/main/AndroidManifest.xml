@@ -33,7 +33,8 @@
         <activity
             android:name=".PersonajesActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity_lobby"></activity>
+        <activity android:name=".activity_lobby" />
+        <activity android:name=".activity_juego"></activity>
     </application>
 
 </manifest>
