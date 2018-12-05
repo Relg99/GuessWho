@@ -2,7 +2,7 @@ package com.rnagames.guesswho.Pojos;
 
 public class PojoPartida {
 
-    private int Numero;
+    //private int Numero;
     private String Nombre;
 
     public PojoPartida(){
@@ -11,9 +11,10 @@ public class PojoPartida {
     public PojoPartida (String Nombre,int Numero)
     {
       this.Nombre=Nombre;
-      this.Numero=Numero;
+      //this.Numero=Numero;
     }
 
+    /*
     public Integer getNumero() {
         return Numero;
     }
@@ -21,6 +22,7 @@ public class PojoPartida {
     public void setNumero(Integer numero) {
         Numero = numero;
     }
+    */
 
     public String getNombre() {
         return Nombre;

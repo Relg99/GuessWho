@@ -19,14 +19,16 @@ public class PartidaAdapter extends FirestoreRecyclerAdapter<PojoPartida,Partida
      *
      * @param options
      */
+
     public PartidaAdapter(@NonNull FirestoreRecyclerOptions<PojoPartida> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull PartidaHolder holder, int position, @NonNull PojoPartida model) {
-        holder.tvNumeroPartida.setText(String.valueOf(model.getNumero()));
+        //holder.tvNumeroPartida.setText(String.valueOf(model.getNumero()));
         holder.tvNombrePartida.setText(model.getNombre());
+
     }
 
     @NonNull
@@ -44,7 +46,7 @@ public class PartidaAdapter extends FirestoreRecyclerAdapter<PojoPartida,Partida
         public PartidaHolder(@NonNull View itemView) {
             super(itemView);
             tvNombrePartida=itemView.findViewById(R.id.tvNombrePartida);
-            tvNumeroPartida=itemView.findViewById(R.id.tvNumeroPartida);
+            //tvNumeroPartida=itemView.findViewById(R.id.tvNumeroPartida);
         }
     }
 }
