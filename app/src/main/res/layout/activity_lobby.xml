@@ -4,21 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_lobby">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center|top"
+    tools:context=".activity_lobby"
+    android:orientation="vertical">
 
-    >
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:gravity="center|top">
 
     <TextView
         android:textAlignment="textStart"
         android:id="@+id/tvGamertag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="alancitou"
         />
     <TextView
         android:textAlignment="textEnd"
@@ -27,5 +26,36 @@
         android:layout_height="wrap_content"
         android:text="Nivel: "
         />
-</LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/bCrearPartida"
+            android:layout_width="500dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:onClick="clickCrearPartida"
+            android:text="Crear Partida" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvListaPartidas"
+            android:layout_width="match_parent"
+            android:layout_height="377dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="82dp">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
 </LinearLayout>
