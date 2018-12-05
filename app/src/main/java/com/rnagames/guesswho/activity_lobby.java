@@ -66,8 +66,7 @@ public class activity_lobby extends AppCompatActivity {
     public void getNivel(final String gamertag){
 
       StringRequest postRequest = new StringRequest(Request.Method.POST, getNivelURL,
-              new Response.Listener<String>()
-              {
+              new Response.Listener<String>() {
                   @Override
                   public void onResponse(String response) {
                    tvNivel.setText(tvNivel.getText().toString()+response);
@@ -97,8 +96,7 @@ public class activity_lobby extends AppCompatActivity {
       pide.add(postRequest);
   }
 
-  public void clickCrearPartida (View view)
-  {
+  public void clickCrearPartida (View view) {
 
   }
 }
