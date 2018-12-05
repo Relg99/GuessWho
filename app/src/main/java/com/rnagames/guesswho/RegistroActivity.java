@@ -31,7 +31,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     EditText etNombre, etApellido, etGamerTag, etCorreo, etContrasena1, etContrasena2;
 
-    public boolean GamerTagExistente=false,CorreoExistente=false,ContrasenasCoinciden = false,correoValidado=false;
+    public boolean GamerTagExistente=false,CorreoExistente=false,ContrasenasCoinciden = false,correoValidado=false,tamanoValidado=false;
     public String URLCheck = "http://guess-who-223421.appspot.com/ChecarDuplicado.php";
     public String URLSubir = "http://guess-who-223421.appspot.com/SubirRegistro.php";
     public String sContrasena1, sContrasena2;
@@ -100,7 +100,7 @@ public class RegistroActivity extends AppCompatActivity {
                                 case "10":
                                     GamerTagExistente = true;
                                     CorreoExistente = false;
-                                    Toast.makeText(RegistroActivity.this, "El gamer tag ya esta en uso.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegistroActivity.this, "El gamertag ya está en uso.", Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case "01":
@@ -114,7 +114,8 @@ public class RegistroActivity extends AppCompatActivity {
                                     CorreoExistente = false;
                                     checarContrasenas();
                                     checarEmail();
-                                    if (ContrasenasCoinciden&&correoValidado)
+                                    tamanoValidado();
+                                    if (ContrasenasCoinciden&&correoValidado&&tamanoValidado)
                                     {
                                         subirDatos();
                                     }
@@ -157,7 +158,8 @@ public class RegistroActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(this,"Sus contraseñas no coinciden.",Toast.LENGTH_SHORT).show();
+           etContrasena2.setError("Sus contraseñas no coinciden.");
+           ContrasenasCoinciden=false;
         }
 
     }
@@ -172,9 +174,36 @@ public class RegistroActivity extends AppCompatActivity {
         correoValidado=true;
         }
         else {
-            Toast.makeText(this, "Email invalido!", Toast.LENGTH_SHORT).show();
+           etCorreo.setError("Email invalido!");
             correoValidado=false;
 
+        }
+    }
+
+    public void tamanoValidado(){
+        if(etNombre.length()<2||etNombre.length()>16||etApellido.length()<2||etApellido.length()>20||
+                etGamerTag.length()<4||etGamerTag.length()>10||etCorreo.length()>40||
+                etContrasena1.length()<6||etContrasena1.length()>20){
+            Toast.makeText(this, "Verifique que los campos de tu registro sean correctos"
+                    , Toast.LENGTH_SHORT).show();
+            tamanoValidado=false;
+        }else{
+            tamanoValidado=true;
+        }
+     if(etNombre.length()<2||etNombre.length()>16){
+        etNombre.setError("El nombre debe contener mínimo 2 carácteres y máximo 16");
+      }
+      if(etApellido.length()<2||etApellido.length()>20){
+            etApellido.setError("El apellído debe contener mínimo 2 carácteres y máximo 20");
+        }
+        if(etGamerTag.length()<4||etGamerTag.length()>10){
+           etGamerTag.setError("El gamertag debe contener mínimo 4 carácteres y máximo 10");
+        }
+        if(etCorreo.length()>40){
+           etCorreo.setError("El correo debe contener máximo 40 carácteres");
+        }
+        if(etContrasena1.length()<6||etContrasena1.length()>20) {
+          etContrasena1.setError("La contraseña debe tener mínimo 6 carácteres y máximo 20");
         }
     }
     public void subirDatos ()
@@ -218,6 +247,7 @@ public class RegistroActivity extends AppCompatActivity {
             Intent i = new Intent(this, MenuActivity.class);
              i.putExtra("gamertag", etGamerTag.getText().toString());
             i.putExtra("lobby",0);
+            i.putExtra("usuarioEnviado",1);
 
             startActivity(i);
         }
@@ -227,8 +257,7 @@ public class RegistroActivity extends AppCompatActivity {
         }
     }
 
-    public void clickCancelar (View view)
-    {
+    public void clickCancelar (View view) {
         finish();
     }
 

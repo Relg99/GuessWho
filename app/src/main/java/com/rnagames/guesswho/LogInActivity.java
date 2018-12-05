@@ -60,6 +60,7 @@ public class LogInActivity extends AppCompatActivity {
                             Intent i = new Intent(LogInActivity.this, MenuActivity.class);
                             i.putExtra("gamertag", etUsuario.getText().toString());
                             i.putExtra("lobby",1);
+                            i.putExtra("usuarioEnviado",1);
 
                             startActivity(i);
                         }else{
