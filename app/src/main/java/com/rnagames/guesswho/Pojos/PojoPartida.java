@@ -2,13 +2,16 @@ package com.rnagames.guesswho.Pojos;
 
 public class PojoPartida {
 
-    private Integer Numero;
+    private int Numero;
     private String Nombre;
 
-    public PojoPartida ()
+    public PojoPartida(){
+        //Constructor vacio necesario
+    }
+    public PojoPartida (String Nombre,int Numero)
     {
-        Numero = 0;
-        Nombre = "Partida";
+      this.Nombre=Nombre;
+      this.Numero=Numero;
     }
 
     public Integer getNumero() {

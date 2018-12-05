@@ -129,6 +129,7 @@ public class MenuActivity extends AppCompatActivity {
             if (recibirUsuario.getInt("lobby") == 1) {
                 Intent i = new Intent(MenuActivity.this, activity_lobby.class);
                 i.putExtra("gamertag", gamertag);
+                Log.d("Llegue","Llegue");
                 startActivity(i);
             }
         }

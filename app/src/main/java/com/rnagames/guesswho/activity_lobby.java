@@ -1,7 +1,5 @@
 package com.rnagames.guesswho;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,83 +14,70 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.rnagames.guesswho.Adapter.AdapterPartida;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.rnagames.guesswho.Adapter.PartidaAdapter;
 import com.rnagames.guesswho.Pojos.PojoPartida;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class activity_lobby extends AppCompatActivity {
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public CollectionReference cola = db.collection("Cola");
+    public PartidaAdapter partidaAdapter;
     String getNivelURL="https://guess-who-223421.appspot.com/getNivel.php";
         String gamertag;
         TextView tvGamertag,tvNivel;
-        public int res ;
-
-    List<PojoPartida> Partidas;
-    RecyclerView recycle;
-    AdapterPartida AdapterP;
+        RecyclerView rvCola;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
-
-        //------------------------------------------------------------------------------------------
-
-        recycle = findViewById(R.id.rvVista);
-
-        recycle.setLayoutManager(new LinearLayoutManager(this));
-
-        Partidas = new ArrayList<>();
-
-        FirebaseDatabase basedatos = FirebaseDatabase.getInstance();
-
-        AdapterP = new AdapterPartida(Partidas);
-
-        recycle.setAdapter(AdapterP);
-
-        basedatos.getReference().getRoot().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Partidas.removeAll(Partidas);
-                for (DataSnapshot snapshot:
-                        dataSnapshot.getChildren()) {
-                    PojoPartida Partida = snapshot.getValue(PojoPartida.class);
-                    Partidas.add(Partida);
-                }
-                AdapterP.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        //------------------------------------------------------------------------------------------
-
         tvGamertag=findViewById(R.id.tvGamertag);
         tvNivel=findViewById(R.id.tvNivel);
+        rvCola = findViewById(R.id.rvListaPartidas);
         Bundle recibirUsuario = getIntent().getExtras();
         gamertag = recibirUsuario.getString("gamertag");
         tvGamertag.setText(gamertag);
-        getNivel(gamertag);
+      getNivel();
 
-        Intent i = getIntent();
 
-        res = i.getIntExtra("facnum",-200);
+    generarRecyclerView();
+
+
 
     }
 
+    public void generarRecyclerView(){
+Query query = cola.orderBy("Numero", Query.Direction.ASCENDING);
+        FirestoreRecyclerOptions<PojoPartida> opciones = new FirestoreRecyclerOptions.Builder<PojoPartida>()
+                .setQuery(query,PojoPartida.class)
+                .build();
 
-    public void getNivel(final String gamertag){
+        partidaAdapter = new PartidaAdapter(opciones);
+        rvCola.setHasFixedSize(true);
+        rvCola.setLayoutManager(new LinearLayoutManager(this));
+        rvCola.setAdapter(partidaAdapter);
+
+
+
+    }
+    @Override
+    protected void onStart(){
+    super.onStart();
+    partidaAdapter.startListening();
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        partidaAdapter.stopListening();
+    }
+    public void getNivel( ){
 
       StringRequest postRequest = new StringRequest(Request.Method.POST, getNivelURL,
               new Response.Listener<String>() {
