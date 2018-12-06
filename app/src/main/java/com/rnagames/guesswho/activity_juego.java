@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,7 +47,7 @@ public class activity_juego extends AppCompatActivity {
     int numeroTablero=1;
     TextView tvElige;
     RecyclerView rvVista;
-    LinearLayout juegoLayout;
+    LinearLayout juegoLayout,dimensionesFoto;
     FichaAdapter fAdapter;
     Button bAceptar;
     ImageView ivMiPersonaje;
@@ -57,36 +58,62 @@ public class activity_juego extends AppCompatActivity {
     String preguntaRecibida;
     Button bGenero,bTez,bPelo;
     int miPersonajePos;
-    int width,height;
+    Double width,height,tempTamanos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Union de componentes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-         width = size.x;
-         height = size.y;
         fAdapter = new FichaAdapter();
         tvElige=findViewById(R.id.tvElige);
         rvVista = findViewById(R.id.rvTablero);
+        dimensionesFoto=findViewById(R.id.dimensionesFoto);
         juegoLayout=findViewById(R.id.juegoLayout);
         bAceptar=findViewById(R.id.bConfirmar);
         ivMiPersonaje=findViewById(R.id.ivMiPersonaje);
         tvMiPersonaje=findViewById(R.id.tvMiPersonaje);
+        //
+
+        //Inicializacion de variables
+        juegoLayout.setVisibility(View.INVISIBLE);
+        //
+
+        //Relacionado con tamaño de vistas
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        width = (double)size.x;
+        height = (double) size.y;
+        width=width-(width*.05);
+        height=height-(height*0.05);
+        ViewGroup.LayoutParams recyclerSize=rvVista.getLayoutParams();
+        tempTamanos=width*0.70;
+        recyclerSize.width=tempTamanos.intValue();
+        recyclerSize.height= height.intValue();
+        ViewGroup.LayoutParams leftBar=dimensionesFoto.getLayoutParams();
+        tempTamanos=width-recyclerSize.width;
+        leftBar.width=tempTamanos.intValue();
+        //
+
+        //Configuracion de Layout del Recyclerview
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
-        layoutManager.setFlexDirection(FlexDirection.COLUMN);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         layoutManager.setFlexWrap(FlexWrap.WRAP);
+        //
+
+        //Inicializacion de adapter y recycler
         tablero = new ArrayList<>();
         fAdapter.contexto = this;
+        fAdapter.widthRecyler=recyclerSize.width;
+        fAdapter.heightRecycler=recyclerSize.height;
         fAdapter.juego=true;
         fAdapter.juegoEmpezado=false;
         fAdapter.datos=tablero;
         rvVista.setAdapter(fAdapter);
         rvVista.setLayoutManager(layoutManager);
         rvVista.getLayoutManager().findViewByPosition(1);
-        juegoLayout.setVisibility(View.INVISIBLE);
+
         getTablero();
 
         //Listener Firebase

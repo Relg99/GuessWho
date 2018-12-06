@@ -1,9 +1,11 @@
 package com.rnagames.guesswho;
 
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,6 +32,8 @@ public class PersonajesActivity extends AppCompatActivity {
 
     RecyclerView rvVista;
     FichaAdapter fAdapter;
+    Double width;
+    Double height;
     // Datos OrigenDatos;
     LinearLayoutManager llmOrientacion;
     ArrayList<Pojo_Personajes> arreglo;
@@ -39,7 +43,12 @@ public class PersonajesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personajes);
 
-
+        //Relacionado con tamaño de vistas
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        width = (double)size.x;
+        height = (double) size.y;
 
         fAdapter = new FichaAdapter();
         rvVista = findViewById(R.id.rvVista);
@@ -50,6 +59,9 @@ public class PersonajesActivity extends AppCompatActivity {
         layoutManager.setFlexWrap(FlexWrap.WRAP);
         arreglo = new ArrayList<>();
         fAdapter.juego=false;
+        fAdapter.widthRecyler=width.intValue();
+        fAdapter.heightRecycler=height.intValue();
+
         fAdapter.contexto = this;
         fAdapter.datos=arreglo;
         rvVista.setAdapter(fAdapter);

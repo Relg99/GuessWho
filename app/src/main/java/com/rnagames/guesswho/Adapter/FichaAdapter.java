@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.lb.auto_fit_textview.AutoResizeTextView;
 import com.rnagames.guesswho.Pojos.Pojo_Personajes;
 import com.rnagames.guesswho.R;
 import com.rnagames.guesswho.activity_juego;
@@ -33,7 +34,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
     Point size = new Point();
     public boolean juego,juegoEmpezado;
     public String personajeElegido="kk";
-    public int width,height;
+    public int widthRecyler,heightRecycler;
 
     @NonNull
     @Override
@@ -41,10 +42,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
 
         View vista = View.inflate(contexto, R.layout.adapter_tablero,null);
         WindowManager wm = (WindowManager) contexto.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        display.getSize(size);
-        width=size.x;
-        height=size.y;
+
         //Toast.makeText(contexto, "Width: "+size.x+"Height: "+size.y, Toast.LENGTH_SHORT).show();
         FichaHolder F =  new FichaHolder(vista);
         return F;
@@ -52,6 +50,17 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
 
     @Override
     public void onBindViewHolder(@NonNull final FichaHolder holder, final int position) {
+        //Tamaño de tarjetas
+        Double temp;
+        ViewGroup.LayoutParams tamanoCartas=holder.llseleccionTarjeta.getLayoutParams();
+        ViewGroup.LayoutParams tamanoFoto=holder.personaje.getLayoutParams();
+
+        tamanoCartas.width=widthRecyler/4;
+        tamanoCartas.height=heightRecycler/4;
+        temp=(tamanoCartas.height*.76);
+        tamanoFoto.height=temp.intValue();
+
+        //  tamanoCartas.height=temp.intValue();
         Picasso.get()
                 .load(datos.get(position).getURL_Foto())
                 .into(holder.personaje);
@@ -109,7 +118,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
     class FichaHolder extends RecyclerView.ViewHolder {
         LinearLayout llTarjeta,llseleccionTarjeta;
         ImageView personaje;
-        TextView tvpersonajeNombre;
+        AutoResizeTextView tvpersonajeNombre;
         public FichaHolder(@NonNull View itemView) {
             super(itemView);
             personaje = itemView.findViewById(R.id.ivFotoPersonaje);

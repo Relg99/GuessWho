@@ -6,38 +6,43 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/llseleccionTarjeta"
+        android:layout_width="100dp"
+        android:layout_height="170dp"
         android:background="#fddc00"
-        >
-    <LinearLayout
-        android:layout_margin="5dp"
-        android:onClick="clickTarjeta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/llTarjeta"
         android:orientation="vertical"
-        android:background="#ff0000"
         >
 
-        <ImageView
-            android:id="@+id/ivFotoPersonaje"
-            android:layout_width="60dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/adriana" />
-
-        <TextView
-            android:id="@+id/tvNombrePersonaje"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/llTarjeta"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.10"
-            android:gravity="center|bottom"
-            android:text="Adriana"
+            android:layout_margin="5dp"
+            android:background="#ff0000"
+            android:gravity="center"
+            android:onClick="clickTarjeta"
+            android:orientation="vertical">
 
-            android:autoSizeTextType="uniform"
-            android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivFotoPersonaje"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:layout_gravity="top|center"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/adriana" />
+
+            <com.lb.auto_fit_textview.AutoResizeTextView
+                android:id="@+id/tvNombrePersonaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|bottom"
+                android:maxLines="1"
+                android:text="Me vale madre "
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    </LinearLayout>
 </LinearLayout>
