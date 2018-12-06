@@ -49,7 +49,7 @@ public class PersonajesActivity extends AppCompatActivity {
         layoutManager.setJustifyContent(JustifyContent.CENTER);
         layoutManager.setFlexWrap(FlexWrap.WRAP);
         arreglo = new ArrayList<>();
-
+        fAdapter.juego=false;
         fAdapter.contexto = this;
         fAdapter.datos=arreglo;
         rvVista.setAdapter(fAdapter);

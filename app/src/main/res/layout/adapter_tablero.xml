@@ -6,10 +6,16 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_margin="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dimensionesFoto"
+
+        >
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:onClick="clickTarjeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/llTarjeta"
         android:orientation="vertical"
         android:background="#ff0000"
         >
@@ -30,5 +36,7 @@
 
             android:autoSizeTextType="uniform"
             android:textStyle="bold" />
+    </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
