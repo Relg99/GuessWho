@@ -1,16 +1,14 @@
 package com.rnagames.guesswho;
 
-import android.database.DataSetObserver;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,25 +17,29 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.rnagames.guesswho.Adapter.FichaAdapter;
-import com.rnagames.guesswho.Pojos.Pojo_FULL;
 import com.rnagames.guesswho.Pojos.Pojo_Personajes;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+/*
+?genero
+?tez
+?peloCafe
+?peloTratado
+?ojosClaros
+?lentes
+?estudianteCeti
+
+ */
 
 public class activity_juego extends AppCompatActivity {
 
@@ -52,12 +54,19 @@ public class activity_juego extends AppCompatActivity {
     ArrayList<Pojo_Personajes> tablero;
     String URLTablero="https://guess-who-223421.appspot.com/vista_"+numeroTablero+".php";
     String miPersonaje;
+    String preguntaRecibida;
+    Button bGenero,bTez,bPelo;
     int miPersonajePos;
+    int width,height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
-
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+         width = size.x;
+         height = size.y;
         fAdapter = new FichaAdapter();
         tvElige=findViewById(R.id.tvElige);
         rvVista = findViewById(R.id.rvTablero);
@@ -80,8 +89,38 @@ public class activity_juego extends AppCompatActivity {
         juegoLayout.setVisibility(View.INVISIBLE);
         getTablero();
 
+        //Listener Firebase
+        /*
+        switch (preguntaRecibida){
+            case "?genero":
+                getMiGeneroMasculino(tablero.get(miPersonajePos).isGenero_Masculino());
+                //EnviarRespuestaalBusDeDatos
+            break;
+            case"?tez":
+                getMiTezMoreno(tablero.get(miPersonajePos).getColor_Piel());
+                //EnviarRespuestaalBusDeDatos
+                break;
+            case"?peloCafe":
+                getMiPeloCafe(tablero.get(miPersonajePos).getColor_Cabello());
+                //
 
+            case"?peloTratado":
 
+                getMiPeloTratado(tablero.get(miPersonajePos).getColor_Cabello());
+                //
+
+            case "?ojosClaros":
+                getMisOjosClaros(tablero.get(miPersonajePos).getColor_Ojos());
+                //
+
+            case"?lentes":
+                getMisLentes(tablero.get(miPersonajePos).isLentes());
+                //
+            case"?estudianteCeti":
+                getMiEstudianteCeti(tablero.get(miPersonajePos).isEstudiante());
+                //
+        }
+*/
     }
 
     public void getTablero() {
@@ -166,5 +205,44 @@ public class activity_juego extends AppCompatActivity {
             .into(ivMiPersonaje);
         tvMiPersonaje.setText(tablero.get(miPersonajePos).getNombre());
 
+}
+boolean getMiGeneroMasculino(Boolean genero){
+
+     return genero;
+}
+boolean getMiTezMoreno(String tez){
+        if(tez.equals("7F5E5E")) {
+            return true;
+        }else{
+            return false;
+        }
+}
+boolean getMiPeloCafe(String peloCafe){
+        if(peloCafe.equals("281F1F")) {
+            return true;
+        }else{
+            return false;
+        }
+}
+boolean getMiPeloTratado(String peloTratado){
+        if(peloTratado.equals("FFFFFF")) {
+            return true;
+        }else{
+            return false;
+        }
+}
+boolean getMisOjosClaros(String ojosClaros){
+        if(ojosClaros.equals("281F1F")) {
+            return false;
+        }else{
+            return true;
+        }
+}
+boolean getMisLentes(Boolean lentes  ){
+
+        return lentes;
+}
+boolean getMiEstudianteCeti(Boolean estudianteCeti){
+        return estudianteCeti;
 }
     }

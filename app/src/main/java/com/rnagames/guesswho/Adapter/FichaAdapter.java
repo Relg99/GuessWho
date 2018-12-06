@@ -2,11 +2,14 @@ package com.rnagames.guesswho.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,15 +30,22 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
 
     public ArrayList<Pojo_Personajes> datos;
     public Context contexto;
+    Point size = new Point();
     public boolean juego,juegoEmpezado;
     public String personajeElegido="kk";
-
+    public int width,height;
 
     @NonNull
     @Override
     public FichaHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View vista = View.inflate(contexto, R.layout.adapter_tablero,null);
+        WindowManager wm = (WindowManager) contexto.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        display.getSize(size);
+        width=size.x;
+        height=size.y;
+        //Toast.makeText(contexto, "Width: "+size.x+"Height: "+size.y, Toast.LENGTH_SHORT).show();
         FichaHolder F =  new FichaHolder(vista);
         return F;
     }
@@ -49,7 +59,8 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
         holder.personaje.setTag(position);
         holder.tvpersonajeNombre.setTag(position);
         holder.llTarjeta.setTag(position);
-
+       // holder.llseleccionTarjeta.setTag(position);
+        holder.llseleccionTarjeta.setBackgroundColor(Color.rgb(255,255,255));
         holder.llTarjeta.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -58,10 +69,17 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
                 holder.tvpersonajeNombre.getTag();
                 holder.llTarjeta.getTag();
                 holder.personaje.getTag();
+               // holder.llseleccionTarjeta.getTag();
+
                 if(juego==true) {
                     if(juegoEmpezado==false){
+
                         personajeElegido=holder.tvpersonajeNombre.getText().toString();
+                        holder.llseleccionTarjeta.setBackgroundColor(Color.rgb(255,255,0));
+
                     }else{
+                        holder.llseleccionTarjeta.setBackgroundColor(Color.rgb(255,255,255));
+
                         if(holder.tvpersonajeNombre.getText().equals("")) {
                             holder.tvpersonajeNombre.setText(datos.get(position).getNombre());
                             holder.personaje.setVisibility(View.VISIBLE);
@@ -89,7 +107,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
     }
 
     class FichaHolder extends RecyclerView.ViewHolder {
-        LinearLayout llTarjeta;
+        LinearLayout llTarjeta,llseleccionTarjeta;
         ImageView personaje;
         TextView tvpersonajeNombre;
         public FichaHolder(@NonNull View itemView) {
@@ -97,7 +115,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
             personaje = itemView.findViewById(R.id.ivFotoPersonaje);
             tvpersonajeNombre=itemView.findViewById(R.id.tvNombrePersonaje);
             llTarjeta=itemView.findViewById(R.id.llTarjeta);
-
+            llseleccionTarjeta=itemView.findViewById(R.id.llseleccionTarjeta);
         }
 
 
