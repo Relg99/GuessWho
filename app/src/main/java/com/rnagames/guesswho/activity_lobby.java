@@ -195,6 +195,7 @@ public class activity_lobby extends AppCompatActivity {
                         Intent i = new Intent(activity_lobby.this, activity_juego.class);
                         i.putExtra("IdJuego", IdJuego);
                         i.putExtra("numTablero", VistaTablero);
+                        i.putExtra("tipoJugador",true);
                         Toast.makeText(activity_lobby.this, "" + VistaTablero, Toast.LENGTH_SHORT).show();
 
                         startActivity(i);
