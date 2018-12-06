@@ -1,5 +1,6 @@
 package com.rnagames.guesswho;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,7 @@ public class activity_lobby extends AppCompatActivity {
         TextView tvGamertag,tvNivel;
         RecyclerView rvCola;
         Button bCrear;
+        Button bUnirse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class activity_lobby extends AppCompatActivity {
         tvNivel=findViewById(R.id.tvNivel);
         rvCola = findViewById(R.id.rvListaPartidas);
         bCrear = findViewById(R.id.bCrearPartida);
+        bUnirse=findViewById(R.id.bUnirse);
 
         Bundle recibirUsuario = getIntent().getExtras();
         gamertag = recibirUsuario.getString("gamertag");
@@ -141,9 +144,11 @@ public class activity_lobby extends AppCompatActivity {
                   @Override
                   public void onSuccess(DocumentReference documentReference) {
                       Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                      /*
                       Toast.makeText(activity_lobby.this,"Esperando",Toast.LENGTH_SHORT).show();
                       rvCola.setVisibility(View.INVISIBLE);
                       bCrear.setVisibility(View.INVISIBLE);
+                      */
                   }
               })
               .addOnFailureListener(new OnFailureListener() {
@@ -152,5 +157,14 @@ public class activity_lobby extends AppCompatActivity {
                       Log.w(TAG, "Error adding document", e);
                   }
               });
+      Intent i = new Intent(activity_lobby.this, activity_juego.class);
+      i.putExtra("kk", 666);
+
+      startActivity(i);
+  }
+  public void clickUnirsePartida(View view){
+      Toast.makeText(this, "Lo estan presionando", Toast.LENGTH_SHORT).show();
+
+
   }
 }

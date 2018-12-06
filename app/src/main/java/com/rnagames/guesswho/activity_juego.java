@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,10 +36,11 @@ import java.util.Map;
 public class activity_juego extends AppCompatActivity {
     int Tablero;
     RecyclerView rvVista;
+    RelativeLayout imgSize;
     FichaAdapter fAdapter;
     LinearLayoutManager llmOrientacion;
     ArrayList<Pojo_Personajes> arreglo;
-    String URLTablero="";
+    String URLTablero="https://guess-who-223421.appspot.com/tablero.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +85,7 @@ public class activity_juego extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
-                params.put("Tablero", Tablero+"");
+                params.put("Tablero", 1+"");
 
 
                 return params;

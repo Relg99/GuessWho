@@ -1,11 +1,9 @@
 package com.rnagames.guesswho;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -14,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.flexbox.AlignContent;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -47,7 +46,7 @@ public class PersonajesActivity extends AppCompatActivity {
         //llmOrientacion = new LinearLayoutManager(this, LinearLayout.VERTICAL,false);
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
         layoutManager.setFlexDirection(FlexDirection.COLUMN);
-        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
         layoutManager.setFlexWrap(FlexWrap.WRAP);
         arreglo = new ArrayList<>();
 
@@ -74,8 +73,8 @@ public class PersonajesActivity extends AppCompatActivity {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 Pojo_Personajes personaje = new Pojo_Personajes();
+                                personaje.setNombre(jsonObject.getString("Nombre"));
                                 personaje.setURL_Foto(personaje.getURL_Foto()+jsonObject.getString("Foto"));
-
                                 //Toast.makeText(PersonajesActivity.this,personaje.getURL_Foto()+jsonObject.getString("Foto") , Toast.LENGTH_SHORT).show();
 
                                 arreglo.add(personaje);

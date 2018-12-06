@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.rnagames.guesswho.Pojos.Pojo_Personajes;
@@ -24,7 +25,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
     @NonNull
     @Override
     public FichaHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View vista = View.inflate(contexto, R.layout.adapter_personajes,null);
+        View vista = View.inflate(contexto, R.layout.adapter_tablero,null);
         FichaHolder F =  new FichaHolder(vista);
         return F;
     }
@@ -35,7 +36,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
         Picasso.get()
                 .load(datos.get(position).getURL_Foto())
                 .into(holder.personaje);
-        Log.d("DEBUG","Llegue");
+        holder.tvpersonajeNombre.setText(datos.get(position).getNombre());
     }
 
     @Override
@@ -46,11 +47,11 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
     class FichaHolder extends RecyclerView.ViewHolder
     {
         ImageView personaje;
-
+        TextView tvpersonajeNombre;
         public FichaHolder(@NonNull View itemView) {
             super(itemView);
-            personaje = itemView.findViewById(R.id.ivPersonaje);
-
+            personaje = itemView.findViewById(R.id.ivFotoPersonaje);
+            tvpersonajeNombre=itemView.findViewById(R.id.tvNombrePersonaje);
 
         }
     }
