@@ -30,7 +30,6 @@ public class PartidaAdapter extends FirestoreRecyclerAdapter<PojoPartida,Partida
 
     @Override
     protected void onBindViewHolder(@NonNull PartidaHolder holder, int position, @NonNull PojoPartida model) {
-        //holder.tvNumeroPartida.setText(String.valueOf(model.getNumero()));
         holder.tvNombrePartida.setText(model.getNombre());
 
     }
@@ -51,14 +50,13 @@ public class PartidaAdapter extends FirestoreRecyclerAdapter<PojoPartida,Partida
 
 
     class PartidaHolder extends RecyclerView.ViewHolder{
-        TextView tvNumeroPartida,tvNombrePartida;
+        TextView tvNombrePartida;
         Button bUnirse;
 
         public PartidaHolder(@NonNull View itemView) {
             super(itemView);
             tvNombrePartida=itemView.findViewById(R.id.tvNombrePartida);
             bUnirse = itemView.findViewById(R.id.bUnirse);
-            //tvNumeroPartida=itemView.findViewById(R.id.tvNumeroPartida);
             bUnirse.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

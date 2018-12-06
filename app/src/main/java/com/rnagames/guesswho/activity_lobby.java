@@ -34,10 +34,12 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rnagames.guesswho.Adapter.PartidaAdapter;
+import com.rnagames.guesswho.Pojos.PojoJuego;
 import com.rnagames.guesswho.Pojos.PojoPartida;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static com.google.firebase.firestore.FieldValue.delete;
 
@@ -50,12 +52,14 @@ public class activity_lobby extends AppCompatActivity {
     String gamertag;
     String TAG = "MENSAJE!";
     String GamerTagUnirse = "";
+    String IdJuego = "";
     TextView tvGamertag, tvNivel;
     RecyclerView rvCola;
     Button bCrear;
     Button bUnirse;
 
     public int res;
+    public int VistaTablero = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +87,30 @@ public class activity_lobby extends AppCompatActivity {
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 PojoPartida Partida = documentSnapshot.toObject(PojoPartida.class);
                                 GamerTagUnirse = Partida.getNombre();
+                                VistaTablero = Partida.getVistaTablero();
+                                IdJuego = documentSnapshot.getId();
+
+                                Toast.makeText(activity_lobby.this, "" + VistaTablero,
+                                        Toast.LENGTH_SHORT).show();
+
+                                Intent i = new Intent(activity_lobby.this, activity_juego.class);
+                                i.putExtra("IdJuego", "" + IdJuego);
+                                i.putExtra("VistaTablero", VistaTablero);
+
+                                startActivity(i);
+
+                                PojoJuego JuegoN = new PojoJuego(GamerTagUnirse, gamertag,
+                                        "Pregunta", "00", false, true);
+
+                                db.collection("Juego").add(JuegoN);
                             }
                         });
                 db.collection("Cola").document(documentSnapshot.getId()).delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(activity_lobby.this, "Se ha unido a la partida de " + GamerTagUnirse, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity_lobby.this, "Se ha unido a la partida de "
+                                        + GamerTagUnirse, Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -98,7 +119,7 @@ public class activity_lobby extends AppCompatActivity {
     }
 
     public void generarRecyclerView() {
-        Query query = cola.orderBy("Nombre", Query.Direction.ASCENDING);
+        Query query = cola.orderBy("nombre", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<PojoPartida> opciones = new FirestoreRecyclerOptions.Builder<PojoPartida>()
                 .setQuery(query, PojoPartida.class)
                 .build();
@@ -158,23 +179,26 @@ public class activity_lobby extends AppCompatActivity {
     }
 
     public void clickCrearPartida(View view) {
+        Random rand = new Random();
+        VistaTablero = rand.nextInt(3) + 1;
+
         // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("Nombre", gamertag);
-        user.put("Vista", 2);
+        PojoPartida Partida = new PojoPartida(gamertag, VistaTablero);
 
         // Add a new document with a generated ID
         db.collection("Cola")
-                .add(user)
+                .add(Partida)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+                        IdJuego = documentReference.getId();
+                        Intent i = new Intent(activity_lobby.this, activity_juego.class);
+                        i.putExtra("IdJuego", "" + IdJuego);
+                        i.putExtra("VistaTablero", VistaTablero);
+                        Toast.makeText(activity_lobby.this, "" + VistaTablero, Toast.LENGTH_SHORT).show();
+
+                        startActivity(i);
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                      /*
-                      Toast.makeText(activity_lobby.this,"Esperando",Toast.LENGTH_SHORT).show();
-                      rvCola.setVisibility(View.INVISIBLE);
-                      bCrear.setVisibility(View.INVISIBLE);
-                      */
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -183,16 +207,6 @@ public class activity_lobby extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-        try {
-
-            Intent i = new Intent(this, activity_juego.class);
-            i.putExtra("juego", res);
-            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
-
-            startActivity(i);
-        } catch (Exception e) {
-            Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void clickUnirsePartida(View view) {
