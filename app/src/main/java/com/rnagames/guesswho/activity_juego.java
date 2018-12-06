@@ -81,7 +81,7 @@ public class activity_juego extends AppCompatActivity {
         jugadorP=getGameInfo.getBoolean("tipoJugador");
         numeroTablero=getGameInfo.getInt("numTablero");
 
-        URLTablero="https://guess-who-223421.appspot.com/vista_"+numeroTablero+".php";
+        URLTablero="https://guess-who-223421.appspot.com/vista_"+1+".php";
         //
 
         //Relacionado con tamaño de vistas
