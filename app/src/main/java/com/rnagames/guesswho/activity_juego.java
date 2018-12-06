@@ -34,17 +34,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class activity_juego extends AppCompatActivity {
-    int Tablero;
+    int numeroTablero;
     RecyclerView rvVista;
     RelativeLayout imgSize;
     FichaAdapter fAdapter;
     LinearLayoutManager llmOrientacion;
     ArrayList<Pojo_Personajes> arreglo;
-    String URLTablero="https://guess-who-223421.appspot.com/tablero.php";
+    String URLTablero="https://guess-who-223421.appspot.com/vista_"+numeroTablero+".php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personajes);
+        setContentView(R.layout.activity_juego);
 
         fAdapter = new FichaAdapter();
         rvVista = findViewById(R.id.rvTablero);
@@ -66,11 +66,27 @@ public class activity_juego extends AppCompatActivity {
     }
 
     public void getTablero() {
-        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.POST, URLTablero,null,
+        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET, URLTablero,null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
 
+                                Pojo_Personajes personaje = new Pojo_Personajes();
+                                personaje.setNombre(jsonObject.getString("Nombre"));
+                                personaje.setURL_Foto(personaje.getURL_Foto()+jsonObject.getString("Foto"));
+                                //Toast.makeText(PersonajesActivity.this,personaje.getURL_Foto()+jsonObject.getString("Foto") , Toast.LENGTH_SHORT).show();
+
+                                arreglo.add(personaje);
+                                fAdapter.notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -81,15 +97,7 @@ public class activity_juego extends AppCompatActivity {
                     }
                 }
         ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
 
-                params.put("Tablero", 1+"");
-
-
-                return params;
-            }
 
         };
         RequestQueue pide = Volley.newRequestQueue(this);
