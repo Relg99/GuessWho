@@ -180,7 +180,7 @@ public class activity_lobby extends AppCompatActivity {
 
     public void clickCrearPartida(View view) {
         Random rand = new Random();
-        VistaTablero = rand.nextInt(3) + 1;
+        VistaTablero = rand.nextInt(5-1) + 1;
 
         // Create a new user with a first and last name
         PojoPartida Partida = new PojoPartida(gamertag, VistaTablero);
@@ -193,8 +193,8 @@ public class activity_lobby extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
                         IdJuego = documentReference.getId();
                         Intent i = new Intent(activity_lobby.this, activity_juego.class);
-                        i.putExtra("IdJuego", "" + IdJuego);
-                        i.putExtra("VistaTablero", VistaTablero);
+                        i.putExtra("IdJuego", IdJuego);
+                        i.putExtra("numTablero", VistaTablero);
                         Toast.makeText(activity_lobby.this, "" + VistaTablero, Toast.LENGTH_SHORT).show();
 
                         startActivity(i);
