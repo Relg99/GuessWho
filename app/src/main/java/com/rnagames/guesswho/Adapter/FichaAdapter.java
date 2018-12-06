@@ -46,7 +46,7 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
         //Toast.makeText(contexto, "Width: "+size.x+"Height: "+size.y, Toast.LENGTH_SHORT).show();
         FichaHolder F =  new FichaHolder(vista);
         return F;
-    }
+    }//ayuda
 
     @Override
     public void onBindViewHolder(@NonNull final FichaHolder holder, final int position) {
