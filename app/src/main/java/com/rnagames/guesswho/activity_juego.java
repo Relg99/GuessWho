@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class activity_juego extends AppCompatActivity {
-    int numeroTablero;
+    int numeroTablero=1;
     RecyclerView rvVista;
     RelativeLayout imgSize;
     FichaAdapter fAdapter;
