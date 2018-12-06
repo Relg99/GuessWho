@@ -48,13 +48,14 @@ public class activity_juego extends AppCompatActivity {
     TextView tvElige;
     RecyclerView rvVista;
     LinearLayout juegoLayout,dimensionesFoto;
+    Boolean jugadorP;
     FichaAdapter fAdapter;
     Button bAceptar;
     ImageView ivMiPersonaje;
     TextView tvMiPersonaje;
     ArrayList<Pojo_Personajes> tablero;
-    String URLTablero="https://guess-who-223421.appspot.com/vista_"+numeroTablero+".php";
-    String miPersonaje;
+    String URLTablero;
+    String miPersonaje,vsPersonaje;
     String preguntaRecibida;
     Button bGenero,bTez,bPelo;
     int miPersonajePos;
@@ -76,6 +77,11 @@ public class activity_juego extends AppCompatActivity {
 
         //Inicializacion de variables
         juegoLayout.setVisibility(View.INVISIBLE);
+        Bundle getGameInfo = getIntent().getExtras();
+        jugadorP=getGameInfo.getBoolean("tipoJugador");
+        numeroTablero=getGameInfo.getInt("numTablero");
+
+        URLTablero="https://guess-who-223421.appspot.com/vista_"+numeroTablero+".php";
         //
 
         //Relacionado con tamaño de vistas
@@ -118,6 +124,7 @@ public class activity_juego extends AppCompatActivity {
 
         //Listener Firebase
         /*
+        AGREGAR el que recibe las preguntas del contricante y lsa procesa
         switch (preguntaRecibida){
             case "?genero":
                 getMiGeneroMasculino(tablero.get(miPersonajePos).isGenero_Masculino());
@@ -145,9 +152,12 @@ public class activity_juego extends AppCompatActivity {
                 //
             case"?estudianteCeti":
                 getMiEstudianteCeti(tablero.get(miPersonajePos).isEstudiante());
+             case:miPersonaje;
+             gameOver();
                 //
         }
 */
+
     }
 
     public void getTablero() {
@@ -210,6 +220,7 @@ public class activity_juego extends AppCompatActivity {
         if(!fAdapter.personajeElegido.equals("kk")) {
             fAdapter.juegoEmpezado=true;
             miPersonaje=fAdapter.personajeElegido;
+            //AGREGAR subir al firebase nombre, dependiendo si es el uno o dos
             bAceptar.setVisibility(View.INVISIBLE);
             juegoLayout.setVisibility(View.VISIBLE);
             tvElige.setVisibility(View.INVISIBLE);
