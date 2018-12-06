@@ -153,6 +153,7 @@ public class activity_juego extends AppCompatActivity {
             case"?estudianteCeti":
                 getMiEstudianteCeti(tablero.get(miPersonajePos).isEstudiante());
              case:miPersonaje;
+             decir que simona
              gameOver();
                 //
         }
