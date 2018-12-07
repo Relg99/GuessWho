@@ -552,7 +552,7 @@ public class activity_juego extends AppCompatActivity {
     public void ponerPuntos(){
 
         //agregar puntaje
-        StringRequest postRequest = new StringRequest(Request.Method.POST, "",
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://guess-who-223421.appspot.com/agregarPuntos.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

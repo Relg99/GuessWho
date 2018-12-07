@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MenuActivity"
-
+    android:background="@drawable/background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,20 +13,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+
         >
+
         <TextView
             android:id="@+id/tvTitulo1"
-            android:textSize="70sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/Titulo1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_marginStart="50dp"
-            android:id="@+id/tvTitulo2"
-            android:text="@string/Titulo2"
+            android:textColor="#fa2d31"
             android:textSize="70sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tvTitulo2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold"
+
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="@string/Titulo2"
+            android:textColor="#fa2d31"
+            android:textSize="70sp" />
 
     </LinearLayout>
 
@@ -38,21 +47,31 @@
         >
 
         <Button
+            android:paddingHorizontal="10dp"
             android:id="@+id/bJugar"
             android:onClick="clikJugar"
             android:text="@string/bJugar"
             android:textSize="45sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/bLeaderBoard"
-            android:onClick="clickLeaderboard"
+            android:paddingHorizontal="10dp"
             android:text="@string/bLeaderboard"
             android:layout_marginTop="50dp"
             android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/button"
+
+            />
 
 
 
@@ -69,13 +88,18 @@
 
 
         <Button
+            android:paddingHorizontal="10dp"
             android:id="@+id/bPersonajes"
             android:onClick="clickPersonajes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:text="@string/bPersonajes" />
+            android:text="@string/bPersonajes"
+
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"/>
 
         <Button
 
@@ -85,7 +109,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:text="@string/bRegistro" />
+            android:text="@string/bRegistro"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
+            />
     </RelativeLayout>
 
 
