@@ -1,5 +1,6 @@
 package com.rnagames.guesswho;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -56,6 +59,9 @@ public class activity_juego extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private static final String KEY_JUGADORESL = "jugadoresL";
+    private static final String KEY_PREGUNTA = "pregunta";
+    private static final String KEY_TURNOJP = "turnoJP";
+    private static final String KEY_PARTIDAENCURSO = "partidaEnCurso";
 
     //Datos de Firestore
     public String JugadorP = "";
@@ -64,6 +70,13 @@ public class activity_juego extends AppCompatActivity {
     public Boolean PartidaEnCurso;
     public String Pregunta;
     public Boolean TurnoJp;
+
+    //Botones
+    public ImageView bGenero;
+    public ImageView bTez;
+    public ImageView bOjos;
+    public ImageView bLentes;
+    public ImageView bEstudiante;
 
     int numeroTablero = 1;
     TextView tvElige;
@@ -78,7 +91,6 @@ public class activity_juego extends AppCompatActivity {
     String URLTablero;
     String miPersonaje, vsPersonaje;
     String preguntaRecibida;
-    Button bGenero, bTez, bPelo;
     String idJuego;
     int miPersonajePos;
     Double width, height, tempTamanos;
@@ -96,6 +108,11 @@ public class activity_juego extends AppCompatActivity {
         bAceptar = findViewById(R.id.bConfirmar);
         ivMiPersonaje = findViewById(R.id.ivMiPersonaje);
         tvMiPersonaje = findViewById(R.id.tvMiPersonaje);
+        bGenero = findViewById(R.id.bGenero);
+        bLentes = findViewById(R.id.bLentes);
+        bOjos = findViewById(R.id.bOjos);
+        bTez = findViewById(R.id.bTez);
+        bEstudiante = findViewById(R.id.bEstudiante);
         //
 
         //Inicializacion de variables
@@ -213,11 +230,155 @@ public class activity_juego extends AppCompatActivity {
                             }
                         }
 
+                        if (jugadorP){
+                            if (TurnoJp){
+                                bGenero.setClickable(true);
+                                bTez.setClickable(true);
+                                bOjos.setClickable(true);
+                                bLentes.setClickable(true);
+                                bEstudiante.setClickable(true);
+                            }else{
+                                bGenero.setClickable(false);
+                                bTez.setClickable(false);
+                                bOjos.setClickable(false);
+                                bLentes.setClickable(false);
+                                bEstudiante.setClickable(false);
+                                Preguntas();
+                            }
+                        }else {
+                            if (!TurnoJp){
+                                bGenero.setClickable(true);
+                                bTez.setClickable(true);
+                                bOjos.setClickable(true);
+                                bLentes.setClickable(true);
+                                bEstudiante.setClickable(true);
+                            }else{
+                                bGenero.setClickable(false);
+                                bTez.setClickable(false);
+                                bOjos.setClickable(false);
+                                bLentes.setClickable(false);
+                                bEstudiante.setClickable(false);
+                                Preguntas();
+                            }
+                        }
 
-                        Toast.makeText(activity_juego.this,"Se actualizo algo",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(activity_juego.this,"Se actualizo algo",Toast.LENGTH_SHORT).show();
 
                     }
                 });
+    }
+
+    public void clickGenero (View view){
+        db.collection("Juego").document(idJuego)
+                .update(KEY_PREGUNTA,"?genero")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(activity_juego.this,
+                                "Haz preguntado el genero del personaje.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void clickTez (View view){
+        db.collection("Juego").document(idJuego)
+                .update(KEY_PREGUNTA,"?tez")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(activity_juego.this,
+                                "Haz preguntado si el personaje es moreno.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void clickOjos(View view){
+        db.collection("Juego").document(idJuego)
+                .update(KEY_PREGUNTA,"?ojosClaros")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(activity_juego.this,
+                                "Haz preguntado si el personaje tiene ojos de color claro.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void clickLentes(View view){
+        db.collection("Juego").document(idJuego)
+                .update(KEY_PREGUNTA,"?lentes")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(activity_juego.this,
+                                "Haz preguntado si el personaje tiene lentes.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void clickEstudiante(View view){
+        db.collection("Juego").document(idJuego)
+                .update(KEY_PREGUNTA,"?estudianteCeti")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(activity_juego.this,
+                                "Haz preguntado si el personaje estudia en CETI.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void Preguntas(){
+        Intent i = new Intent(this, PreguntaPU.class);
+        preguntaRecibida = Pregunta;
+        switch (preguntaRecibida){
+            case "?genero":
+                i.putExtra("Pregunta","?genero");
+                i.putExtra("idJuego",idJuego);
+                startActivity(i);
+                //getMiGeneroMasculino(tablero.get(miPersonajePos).isGenero_Masculino());
+                //EnviarRespuestaalBusDeDatos
+                break;
+            case"?tez":
+                i.putExtra("Pregunta","?tez");
+                i.putExtra("idJuego",idJuego);
+                startActivity(i);
+                //getMiTezMoreno(tablero.get(miPersonajePos).getColor_Piel());
+                //EnviarRespuestaalBusDeDatos
+                break;
+            case"?peloCafe":
+                //getMiPeloCafe(tablero.get(miPersonajePos).getColor_Cabello());
+                //
+                break;
+            case"?peloTratado":
+                //getMiPeloTratado(tablero.get(miPersonajePos).getColor_Cabello());
+                //
+                break;
+            case "?ojosClaros":
+                i.putExtra("Pregunta","?ojosClaros");
+                i.putExtra("idJuego",idJuego);
+                startActivity(i);
+                //getMisOjosClaros(tablero.get(miPersonajePos).getColor_Ojos());
+                //
+                break;
+            case"?lentes":
+                i.putExtra("Pregunta","?lentes");
+                i.putExtra("idJuego",idJuego);
+                startActivity(i);
+                //getMisLentes(tablero.get(miPersonajePos).isLentes());
+                //
+                break;
+            case"?estudianteCeti":
+                i.putExtra("Pregunta","?estudianteCeti");
+                i.putExtra("idJuego",idJuego);
+                startActivity(i);
+                //getMiEstudianteCeti(tablero.get(miPersonajePos).isEstudiante());
+                break;
+            default:
+                Toast.makeText(activity_juego.this,Pregunta,
+                        Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
 
@@ -293,14 +454,16 @@ public class activity_juego extends AppCompatActivity {
                     break;
                 case "01":
                     db.collection("Juego").document(idJuego)
-                            .update(KEY_JUGADORESL,"11");
+                            .update(KEY_JUGADORESL,"11",
+                                    KEY_PARTIDAENCURSO,true);
                     break;
                 case"10":
                     db.collection("Juego").document(idJuego)
-                            .update(KEY_JUGADORESL,"11");
+                            .update(KEY_JUGADORESL,"11",
+                                    KEY_PARTIDAENCURSO,true);
                     break;
             }
-            Toast.makeText(activity_juego.this,""+JugadoresL,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(activity_juego.this,""+JugadoresL,Toast.LENGTH_SHORT).show();
             fAdapter.juegoEmpezado = true;
             miPersonaje = fAdapter.personajeElegido;
             //AGREGAR subir al firebase nombre, dependiendo si es el uno o dos

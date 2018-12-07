@@ -11,8 +11,10 @@
 
 
 <RelativeLayout
+    android:id="@+id/rlBotones"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="false">
         <LinearLayout
             android:id="@+id/juegoLayout"
             android:layout_width="wrap_content"
@@ -52,11 +54,13 @@
                 <ImageView
                     android:id="@+id/bGenero"
                     android:layout_width="match_parent"
+                    android:onClick="clickGenero"
                     android:layout_height="40dp"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/genero" />
             <ImageView
                 android:id="@+id/bTez"
+                android:onClick="clickTez"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 app:srcCompat="@drawable/piel_morena"
@@ -85,6 +89,7 @@
 
             <ImageView
                 android:id="@+id/bOjos"
+                android:onClick="clickOjos"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:src="@drawable/ojos_claros"
@@ -94,6 +99,7 @@
 
             <ImageView
                 android:id="@+id/bLentes"
+                android:onClick="clickLentes"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:src="@drawable/lentes"
@@ -103,6 +109,7 @@
 
             <ImageView
                 android:id="@+id/bEstudiante"
+                android:onClick="clickEstudiante"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:scaleType="fitCenter"
@@ -173,6 +180,7 @@
     android:orientation="vertical"
     android:id="@+id/layoutRecyler"
     android:clickable="true"
+    android:focusable="true"
     >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTablero"

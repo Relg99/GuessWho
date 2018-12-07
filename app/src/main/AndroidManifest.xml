@@ -33,8 +33,14 @@
         <activity
             android:name=".PersonajesActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity_lobby" />
-        <activity android:name=".activity_juego"></activity>
+        <activity android:name=".activity_lobby"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity_juego"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PreguntaPU"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Custom" />
     </application>
 
 </manifest>
