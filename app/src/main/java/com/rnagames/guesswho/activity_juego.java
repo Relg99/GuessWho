@@ -23,6 +23,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,6 +54,8 @@ import javax.annotation.Nullable;
 public class activity_juego extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private static final String KEY_JUGADORESL = "jugadoresL";
 
     //Datos de Firestore
     public String JugadorP = "";
@@ -198,6 +201,21 @@ public class activity_juego extends AppCompatActivity {
                         Pregunta = JuegoActual.getPregunta();
                         TurnoJp = JuegoActual.getTurnoJP();
 
+                        if (jugadorP){
+                            if (JugadoresL.equals("01")){
+                                Toast.makeText(activity_juego.this,
+                                        "Tu compañero esta listo",Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            if (JugadoresL.equals("10")){
+                                Toast.makeText(activity_juego.this,
+                                        "Tu compañero esta listo",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+
+                        Toast.makeText(activity_juego.this,"Se actualizo algo",Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
@@ -263,6 +281,26 @@ public class activity_juego extends AppCompatActivity {
 
     public void startGame(View view) {
         if (!fAdapter.personajeElegido.equals("kk")) {
+            switch (JugadoresL){
+                case "00":
+                    if (jugadorP){
+                        db.collection("Juego").document(idJuego)
+                                .update(KEY_JUGADORESL,"10");
+                    }else{
+                        db.collection("Juego").document(idJuego)
+                                .update(KEY_JUGADORESL,"01");
+                    }
+                    break;
+                case "01":
+                    db.collection("Juego").document(idJuego)
+                            .update(KEY_JUGADORESL,"11");
+                    break;
+                case"10":
+                    db.collection("Juego").document(idJuego)
+                            .update(KEY_JUGADORESL,"11");
+                    break;
+            }
+            Toast.makeText(activity_juego.this,""+JugadoresL,Toast.LENGTH_SHORT).show();
             fAdapter.juegoEmpezado = true;
             miPersonaje = fAdapter.personajeElegido;
             //AGREGAR subir al firebase nombre, dependiendo si es el uno o dos
@@ -272,7 +310,7 @@ public class activity_juego extends AppCompatActivity {
             //Toast.makeText(this, personajes.get(0).getNombre(), Toast.LENGTH_SHORT).show();
             encontrarPersonaje();
         } else {
-            Toast.makeText(this, "Elige ha un personaje antes.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Elige a un personaje antes.", Toast.LENGTH_SHORT).show();
         }
     }
 
