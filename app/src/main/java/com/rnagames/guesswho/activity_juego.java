@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
@@ -41,6 +42,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -79,7 +82,7 @@ public class activity_juego extends AppCompatActivity {
     public ImageView bLentes;
     public ImageView bEstudiante;
 
-    int numeroTablero = 1;
+    int numeroTablero = 1,puntosGanados=5;
     TextView tvElige;
     RecyclerView rvVista;
     LinearLayout juegoLayout, dimensionesFoto;
@@ -93,6 +96,7 @@ public class activity_juego extends AppCompatActivity {
     String miPersonaje, vsPersonaje;
     String preguntaRecibida;
     String idJuego;
+    String gamertag;
     int miPersonajePos;
     Double width, height, tempTamanos;
     Boolean ActivarPreguntas = true;
@@ -123,6 +127,7 @@ public class activity_juego extends AppCompatActivity {
         jugadorP = getGameInfo.getBoolean("tipoJugador");
         numeroTablero = getGameInfo.getInt("numTablero");
         idJuego = getGameInfo.getString("IdJuego");
+        gamertag=getGameInfo.getString("gamertag");
         URLTablero = "https://guess-who-223421.appspot.com/vista_" + numeroTablero + ".php";
         //
 
@@ -544,50 +549,38 @@ public class activity_juego extends AppCompatActivity {
         tvMiPersonaje.setText(tablero.get(miPersonajePos).getNombre());
 
     }
+    public void ponerPuntos(){
 
-    boolean getMiGeneroMasculino(Boolean genero) {
+        //agregar puntaje
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(activity_juego.this, "Has ganado "+puntosGanados+"XP", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast.makeText(activity_juego.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("gamertag", gamertag);
+                params.put("puntos", puntosGanados+"");
 
-        return genero;
+                return params;
+            }
+
+        };
+        RequestQueue pide = Volley.newRequestQueue(this);
+
+        pide.add(postRequest);
     }
 
-    boolean getMiTezMoreno(String tez) {
-        if (tez.equals("7F5E5E")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    boolean getMiPeloCafe(String peloCafe) {
-        if (peloCafe.equals("281F1F")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    boolean getMiPeloTratado(String peloTratado) {
-        if (peloTratado.equals("FFFFFF")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    boolean getMisOjosClaros(String ojosClaros) {
-        if (ojosClaros.equals("281F1F")) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    boolean getMisLentes(Boolean lentes) {
-
-        return lentes;
-    }
-
-    boolean getMiEstudianteCeti(Boolean estudianteCeti) {
-        return estudianteCeti;
-    }
 }
+

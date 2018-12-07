@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:background="#ff0000"
+            android:background="@drawable/caracteristicasbackground"
             android:gravity="center"
             android:onClick="clickTarjeta"
             android:orientation="vertical">

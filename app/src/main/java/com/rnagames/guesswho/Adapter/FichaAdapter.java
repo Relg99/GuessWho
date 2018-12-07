@@ -39,7 +39,8 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
     public boolean juego,juegoEmpezado;
     public String personajeElegido="kk";
     public int widthRecyler,heightRecycler;
-
+    public boolean adivinar=false;
+    public String personajeAdivinado;
     @NonNull
     @Override
     public FichaHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -84,27 +85,31 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
                // holder.llseleccionTarjeta.getTag();
 
                 if(juego==true) {
-                    if(juegoEmpezado==false){
+                    if(adivinar==true){
+                       personajeAdivinado= datos.get(position).getNombre();
+                       adivinar=false;
+                    }else {
+                        if (juegoEmpezado == false) {
 
-                        personajeElegido=holder.tvpersonajeNombre.getText().toString();
-                        holder.llseleccionTarjeta.setBackgroundColor(Color.rgb(255,255,0));
+                            personajeElegido = holder.tvpersonajeNombre.getText().toString();
+                            holder.llseleccionTarjeta.setBackgroundColor(Color.rgb(255, 255, 0));
 
-                    }else{
-                        holder.llseleccionTarjeta.setBackgroundColor(Color.rgb(255,255,255));
+                        } else {
+                            holder.llseleccionTarjeta.setBackgroundColor(Color.rgb(255, 255, 255));
 
-                        if(holder.tvpersonajeNombre.getText().equals("")) {
-                            holder.tvpersonajeNombre.setText(datos.get(position).getNombre());
-                            holder.personaje.setVisibility(View.VISIBLE);
-                            holder.llTarjeta.setBackgroundColor(Color.rgb(255,0,0));
+                            if (holder.tvpersonajeNombre.getText().equals("")) {
+                                holder.tvpersonajeNombre.setText(datos.get(position).getNombre());
+                                holder.personaje.setVisibility(View.VISIBLE);
+                                holder.llTarjeta.setBackgroundResource(R.drawable.caracteristicasbackground);
 
-                        }else{
-                            holder.tvpersonajeNombre.setText("");
-                            holder.personaje.setVisibility(View.INVISIBLE);
-                            holder.llTarjeta.setBackgroundColor(Color.rgb(0,0,0));
+                            } else {
+                                holder.tvpersonajeNombre.setText("");
+                                holder.personaje.setVisibility(View.INVISIBLE);
+                                holder.llTarjeta.setBackgroundColor(Color.rgb(0, 0, 0));
 
+                            }
                         }
                     }
-
                 }else{
                     Intent i = new Intent(contexto, CaracteristicasActivity.class);
                     i.putExtra("ID",datos.get(position).getPersonaje_ID());

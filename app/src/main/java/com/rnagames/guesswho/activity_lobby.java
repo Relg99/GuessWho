@@ -108,6 +108,7 @@ public class activity_lobby extends AppCompatActivity {
                                 i.putExtra("IdJuego", "" + IdJuegoCreado);
                                 i.putExtra("numTablero", VistaTablero);
                                 i.putExtra("tipoJugador", false);
+                                i.putExtra("gamertag", gamertag);
 
                                 startActivity(i);
                             }
@@ -202,6 +203,8 @@ public class activity_lobby extends AppCompatActivity {
                                         i.putExtra("IdJuego", IdJuegoCreado);
                                         i.putExtra("numTablero", VistaTablero);
                                         i.putExtra("tipoJugador", true);
+                                        i.putExtra("gamertag", gamertag);
+
                                         startActivity(i);
                                     }
                                 });
