@@ -48,82 +48,103 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/bGenero"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
 
-
-                android:text="Button" />
-
-            <Button
+                <ImageView
+                    android:id="@+id/bGenero"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/genero" />
+            <ImageView
                 android:id="@+id/bTez"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="Button" />
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/piel_morena"
+                android:scaleType="centerInside"
+                android:layout_marginBottom="5dp"
+               />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:gravity="center"
     >
-            <Button
+            <ImageView
                 android:id="@+id/bPelo"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/pelo_cafe"
                 android:text="" />
-    <Button
+    <ImageView
         android:id="@+id/bPeloChange"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:text="" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/pie"
+      />
 </LinearLayout>
 
-            <Button
+            <ImageView
                 android:id="@+id/bOjos"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:src="@drawable/ojos_claros"
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="5dp"
+               />
 
-                android:text="Button" />
-
-            <Button
+            <ImageView
                 android:id="@+id/bLentes"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_height="40dp"
+                android:src="@drawable/lentes"
+                android:layout_marginBottom="5dp"
 
-            <Button
+                />
+
+            <ImageView
                 android:id="@+id/bEstudiante"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="5dp"
+
+                android:src="@drawable/estudiante"
+                />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom"
+                android:gravity="bottom|center"
                 android:orientation="vertical">
 
-                <Button
+                <ImageView
                     android:id="@+id/bCheck"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="Button" />
+                    android:src="@drawable/check"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="5dp"
 
-                <Button
+                    />
+
+                <ImageView
                     android:id="@+id/bAdivinar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="Button" />
+                    android:src="@drawable/guess"
+                    android:layout_marginBottom="5dp"
+                android:scaleType="fitCenter"
+                    />
 
-                <Button
+                <ImageView
                     android:id="@+id/bSalir"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="Button" />
+                    android:src="@drawable/exit"
+                    android:layout_marginBottom="5dp"
+
+                    />
 
             </LinearLayout>
         </LinearLayout>
@@ -137,11 +158,11 @@
 
     <Button
         android:id="@+id/bConfirmar"
-        android:onClick="startGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="startGame"
         android:text="Aceptar" />
 </RelativeLayout>
 

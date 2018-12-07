@@ -48,7 +48,6 @@ import javax.annotation.Nullable;
 ?ojosClaros
 ?lentes
 ?estudianteCeti
-
  */
 
 public class activity_juego extends AppCompatActivity {
@@ -144,7 +143,9 @@ public class activity_juego extends AppCompatActivity {
         getTablero();
 
         //Listener Firebase
+
         /*
+
         AGREGAR el que recibe las preguntas del contricante y lsa procesa
         switch (preguntaRecibida){
             case "?genero":
@@ -257,7 +258,6 @@ public class activity_juego extends AppCompatActivity {
 
         };
         RequestQueue pide = Volley.newRequestQueue(this);
-
         pide.add(postRequest);
     }
 

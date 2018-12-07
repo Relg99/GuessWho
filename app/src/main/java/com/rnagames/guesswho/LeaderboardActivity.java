@@ -18,4 +18,5 @@ public class LeaderboardActivity extends AppCompatActivity {
         res = i.getIntExtra("facnum",-200);
 
     }
+
 }
