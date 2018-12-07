@@ -95,7 +95,7 @@ public class activity_lobby extends AppCompatActivity {
 
                                 Intent i = new Intent(activity_lobby.this, activity_juego.class);
                                 i.putExtra("IdJuego", "" + IdJuego);
-                                i.putExtra("VistaTablero", VistaTablero);
+                                i.putExtra("numTablero", VistaTablero);
                                 i.putExtra("tipoJugador", false);
 
                                 startActivity(i);
