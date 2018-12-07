@@ -62,6 +62,7 @@ public class activity_juego extends AppCompatActivity {
     private static final String KEY_PREGUNTA = "pregunta";
     private static final String KEY_TURNOJP = "turnoJP";
     private static final String KEY_PARTIDAENCURSO = "partidaEnCurso";
+    private static final String KEY_ACTIVARBOTON = "activarBoton";
 
     //Datos de Firestore
     public String JugadorP = "";
@@ -94,6 +95,7 @@ public class activity_juego extends AppCompatActivity {
     String idJuego;
     int miPersonajePos;
     Double width, height, tempTamanos;
+    Boolean ActivarPreguntas = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +211,8 @@ public class activity_juego extends AppCompatActivity {
         db.collection("Juego").document(idJuego)
                 .addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
+                                        @Nullable FirebaseFirestoreException e) {
                         PojoJuego JuegoActual = documentSnapshot.toObject(PojoJuego.class);
                         JugadorP = JuegoActual.getJugadorP();
                         JugadorS = JuegoActual.getJugadorS();
@@ -217,27 +220,33 @@ public class activity_juego extends AppCompatActivity {
                         PartidaEnCurso = JuegoActual.getPartidaEnCurso();
                         Pregunta = JuegoActual.getPregunta();
                         TurnoJp = JuegoActual.getTurnoJP();
+                        ActivarPreguntas = JuegoActual.getActivarBoton();
 
-                        if (jugadorP){
-                            if (JugadoresL.equals("01")){
+                        if (jugadorP) {
+                            if (JugadoresL.equals("01")) {
                                 Toast.makeText(activity_juego.this,
-                                        "Tu compañero esta listo",Toast.LENGTH_SHORT).show();
+                                        "Tu compañero esta listo", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-                            if (JugadoresL.equals("10")){
+                        } else {
+                            if (JugadoresL.equals("10")) {
                                 Toast.makeText(activity_juego.this,
-                                        "Tu compañero esta listo",Toast.LENGTH_SHORT).show();
+                                        "Tu compañero esta listo", Toast.LENGTH_SHORT).show();
                             }
                         }
 
-                        if (jugadorP){
-                            if (TurnoJp){
-                                bGenero.setClickable(true);
-                                bTez.setClickable(true);
-                                bOjos.setClickable(true);
-                                bLentes.setClickable(true);
-                                bEstudiante.setClickable(true);
-                            }else{
+
+                        if (jugadorP) {
+                            if (TurnoJp) {
+                                if (ActivarPreguntas) {
+                                    bGenero.setClickable(true);
+                                    bTez.setClickable(true);
+                                    bOjos.setClickable(true);
+                                    bLentes.setClickable(true);
+                                    bEstudiante.setClickable(true);
+                                    Toast.makeText(activity_juego.this,"Es tu turno.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
                                 bGenero.setClickable(false);
                                 bTez.setClickable(false);
                                 bOjos.setClickable(false);
@@ -245,14 +254,18 @@ public class activity_juego extends AppCompatActivity {
                                 bEstudiante.setClickable(false);
                                 Preguntas();
                             }
-                        }else {
-                            if (!TurnoJp){
-                                bGenero.setClickable(true);
-                                bTez.setClickable(true);
-                                bOjos.setClickable(true);
-                                bLentes.setClickable(true);
-                                bEstudiante.setClickable(true);
-                            }else{
+                        } else {
+                            if (!TurnoJp) {
+                                if (!ActivarPreguntas) {
+                                    bGenero.setClickable(true);
+                                    bTez.setClickable(true);
+                                    bOjos.setClickable(true);
+                                    bLentes.setClickable(true);
+                                    bEstudiante.setClickable(true);
+                                    Toast.makeText(activity_juego.this,"Es tu turno.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
                                 bGenero.setClickable(false);
                                 bTez.setClickable(false);
                                 bOjos.setClickable(false);
@@ -261,121 +274,157 @@ public class activity_juego extends AppCompatActivity {
                                 Preguntas();
                             }
                         }
-
-                        //Toast.makeText(activity_juego.this,"Se actualizo algo",Toast.LENGTH_SHORT).show();
-
                     }
                 });
     }
 
-    public void clickGenero (View view){
+    public void clickGenero(View view) {
         db.collection("Juego").document(idJuego)
-                .update(KEY_PREGUNTA,"?genero")
+                .update(KEY_PREGUNTA, "?genero")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(activity_juego.this,
-                                "Haz preguntado el genero del personaje.",Toast.LENGTH_SHORT).show();
+                                "Haz preguntado el genero del personaje.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void clickTez (View view){
+    public void clickTez(View view) {
         db.collection("Juego").document(idJuego)
-                .update(KEY_PREGUNTA,"?tez")
+                .update(KEY_PREGUNTA, "?tez")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(activity_juego.this,
-                                "Haz preguntado si el personaje es moreno.",Toast.LENGTH_SHORT).show();
+                                "Haz preguntado si el personaje es moreno.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void clickOjos(View view){
+    public void clickOjos(View view) {
         db.collection("Juego").document(idJuego)
-                .update(KEY_PREGUNTA,"?ojosClaros")
+                .update(KEY_PREGUNTA, "?ojosClaros")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(activity_juego.this,
-                                "Haz preguntado si el personaje tiene ojos de color claro.",Toast.LENGTH_SHORT).show();
+                                "Haz preguntado si el personaje tiene ojos de color claro.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void clickLentes(View view){
+    public void clickLentes(View view) {
         db.collection("Juego").document(idJuego)
-                .update(KEY_PREGUNTA,"?lentes")
+                .update(KEY_PREGUNTA, "?lentes")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(activity_juego.this,
-                                "Haz preguntado si el personaje tiene lentes.",Toast.LENGTH_SHORT).show();
+                                "Haz preguntado si el personaje tiene lentes.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void clickEstudiante(View view){
+    public void clickEstudiante(View view) {
         db.collection("Juego").document(idJuego)
-                .update(KEY_PREGUNTA,"?estudianteCeti")
+                .update(KEY_PREGUNTA, "?estudianteCeti")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(activity_juego.this,
-                                "Haz preguntado si el personaje estudia en CETI.",Toast.LENGTH_SHORT).show();
+                                "Haz preguntado si el personaje estudia en CETI.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void Preguntas(){
+    public void clickCheckTurno(View view) {
+        if (jugadorP) {
+            if (!TurnoJp) {
+                db.collection("Juego").document(idJuego)
+                        .update(KEY_ACTIVARBOTON, false)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(activity_juego.this, "Termino tu turno.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(this, "No es tu turno.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (TurnoJp) {
+                db.collection("Juego").document(idJuego)
+                        .update(KEY_ACTIVARBOTON, true)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(activity_juego.this, "Termino tu turno.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(this, "No es tu turno.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void Preguntas() {
         Intent i = new Intent(this, PreguntaPU.class);
         preguntaRecibida = Pregunta;
-        switch (preguntaRecibida){
+        switch (preguntaRecibida) {
             case "?genero":
-                i.putExtra("Pregunta","?genero");
-                i.putExtra("idJuego",idJuego);
+                i.putExtra("Pregunta", "?genero");
+                i.putExtra("idJuego", idJuego);
                 startActivity(i);
                 //getMiGeneroMasculino(tablero.get(miPersonajePos).isGenero_Masculino());
                 //EnviarRespuestaalBusDeDatos
                 break;
-            case"?tez":
-                i.putExtra("Pregunta","?tez");
-                i.putExtra("idJuego",idJuego);
+            case "?tez":
+                i.putExtra("Pregunta", "?tez");
+                i.putExtra("idJuego", idJuego);
                 startActivity(i);
                 //getMiTezMoreno(tablero.get(miPersonajePos).getColor_Piel());
                 //EnviarRespuestaalBusDeDatos
                 break;
-            case"?peloCafe":
+            case "?peloCafe":
                 //getMiPeloCafe(tablero.get(miPersonajePos).getColor_Cabello());
                 //
                 break;
-            case"?peloTratado":
+            case "?peloTratado":
                 //getMiPeloTratado(tablero.get(miPersonajePos).getColor_Cabello());
                 //
                 break;
             case "?ojosClaros":
-                i.putExtra("Pregunta","?ojosClaros");
-                i.putExtra("idJuego",idJuego);
+                i.putExtra("Pregunta", "?ojosClaros");
+                i.putExtra("idJuego", idJuego);
                 startActivity(i);
                 //getMisOjosClaros(tablero.get(miPersonajePos).getColor_Ojos());
                 //
                 break;
-            case"?lentes":
-                i.putExtra("Pregunta","?lentes");
-                i.putExtra("idJuego",idJuego);
+            case "?lentes":
+                i.putExtra("Pregunta", "?lentes");
+                i.putExtra("idJuego", idJuego);
                 startActivity(i);
                 //getMisLentes(tablero.get(miPersonajePos).isLentes());
                 //
                 break;
-            case"?estudianteCeti":
-                i.putExtra("Pregunta","?estudianteCeti");
-                i.putExtra("idJuego",idJuego);
+            case "?estudianteCeti":
+                i.putExtra("Pregunta", "?estudianteCeti");
+                i.putExtra("idJuego", idJuego);
                 startActivity(i);
                 //getMiEstudianteCeti(tablero.get(miPersonajePos).isEstudiante());
                 break;
             default:
-                Toast.makeText(activity_juego.this,Pregunta,
+                Toast.makeText(activity_juego.this, Pregunta,
                         Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -383,7 +432,9 @@ public class activity_juego extends AppCompatActivity {
 
 
     public void getTablero() {
-        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET, URLTablero, null,
+        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET,
+                URLTablero,
+                null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -429,7 +480,8 @@ public class activity_juego extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Toast.makeText(activity_juego.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_juego.this, "" + error.getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
         ) {
@@ -442,25 +494,25 @@ public class activity_juego extends AppCompatActivity {
 
     public void startGame(View view) {
         if (!fAdapter.personajeElegido.equals("kk")) {
-            switch (JugadoresL){
+            switch (JugadoresL) {
                 case "00":
-                    if (jugadorP){
+                    if (jugadorP) {
                         db.collection("Juego").document(idJuego)
-                                .update(KEY_JUGADORESL,"10");
-                    }else{
+                                .update(KEY_JUGADORESL, "10");
+                    } else {
                         db.collection("Juego").document(idJuego)
-                                .update(KEY_JUGADORESL,"01");
+                                .update(KEY_JUGADORESL, "01");
                     }
                     break;
                 case "01":
                     db.collection("Juego").document(idJuego)
-                            .update(KEY_JUGADORESL,"11",
-                                    KEY_PARTIDAENCURSO,true);
+                            .update(KEY_JUGADORESL, "11",
+                                    KEY_PARTIDAENCURSO, true);
                     break;
-                case"10":
+                case "10":
                     db.collection("Juego").document(idJuego)
-                            .update(KEY_JUGADORESL,"11",
-                                    KEY_PARTIDAENCURSO,true);
+                            .update(KEY_JUGADORESL, "11",
+                                    KEY_PARTIDAENCURSO, true);
                     break;
             }
             //Toast.makeText(activity_juego.this,""+JugadoresL,Toast.LENGTH_SHORT).show();
@@ -473,7 +525,8 @@ public class activity_juego extends AppCompatActivity {
             //Toast.makeText(this, personajes.get(0).getNombre(), Toast.LENGTH_SHORT).show();
             encontrarPersonaje();
         } else {
-            Toast.makeText(this, "Elige a un personaje antes.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Elige a un personaje antes.",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

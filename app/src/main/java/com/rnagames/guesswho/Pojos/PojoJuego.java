@@ -7,18 +7,28 @@ public class PojoJuego {
     private String JugadoresL = "00";
     private Boolean PartidaEnCurso = false;
     private Boolean TurnoJP = true;
+    private Boolean ActivarBoton = true;
 
     public PojoJuego(){
         //Vacio
     }
 
-    public PojoJuego(String jugadorP, String jugadorS, String pregunta, String jugadoresL, Boolean partidaEnCurso, Boolean turnoJP) {
+    public PojoJuego(String jugadorP, String jugadorS, String pregunta, String jugadoresL, Boolean partidaEnCurso, Boolean turnoJP,Boolean activarBoton) {
         this.JugadorP = jugadorP;
         this.JugadorS = jugadorS;
         this.Pregunta = pregunta;
         this.JugadoresL = jugadoresL;
         this.PartidaEnCurso = partidaEnCurso;
         this.TurnoJP = turnoJP;
+        this.ActivarBoton = activarBoton;
+    }
+
+    public Boolean getActivarBoton() {
+        return ActivarBoton;
+    }
+
+    public void setActivarBoton(Boolean activarBoton) {
+        ActivarBoton = activarBoton;
     }
 
     public String getJugadorP() {
