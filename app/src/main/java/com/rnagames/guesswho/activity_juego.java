@@ -58,6 +58,7 @@ public class activity_juego extends AppCompatActivity {
     String miPersonaje,vsPersonaje;
     String preguntaRecibida;
     Button bGenero,bTez,bPelo;
+    String idJuego;
     int miPersonajePos;
     Double width,height,tempTamanos;
     @Override
@@ -80,7 +81,7 @@ public class activity_juego extends AppCompatActivity {
         Bundle getGameInfo = getIntent().getExtras();
         jugadorP=getGameInfo.getBoolean("tipoJugador");
         numeroTablero=getGameInfo.getInt("numTablero");
-
+        idJuego=getGameInfo.getString("IdJuego");
         URLTablero="https://guess-who-223421.appspot.com/vista_"+numeroTablero+".php";
         //
 
