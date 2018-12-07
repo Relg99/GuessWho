@@ -204,7 +204,7 @@ public class activity_lobby extends AppCompatActivity {
                         //i.putExtra("IdCola", IdCola);
                         i.putExtra("VistaTablero", VistaTablero);
                         //Toast.makeText(activity_lobby.this,VistaTablero,
-                          //      Toast.LENGTH_SHORT).show();
+                        //      Toast.LENGTH_SHORT).show();
 
                         startActivity(i);
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
