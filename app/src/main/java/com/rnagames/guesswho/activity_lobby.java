@@ -45,6 +45,9 @@ import static com.google.firebase.firestore.FieldValue.delete;
 
 
 public class activity_lobby extends AppCompatActivity {
+
+    private static final String KEY_JUGADORS = "jugadorS";
+
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public CollectionReference cola = db.collection("Cola");
     public PartidaAdapter partidaAdapter;
@@ -52,7 +55,7 @@ public class activity_lobby extends AppCompatActivity {
     String gamertag;
     String TAG = "MENSAJE!";
     String GamerTagUnirse = "";
-    String IdJuego = "";
+    String IdJuegoCreado = "";
     TextView tvGamertag, tvNivel;
     RecyclerView rvCola;
     Button bCrear;
@@ -85,35 +88,31 @@ public class activity_lobby extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                PojoPartida Partida = documentSnapshot.toObject(PojoPartida.class);
-                                GamerTagUnirse = Partida.getNombre();
-                                VistaTablero = Partida.getVistaTablero();
-                                IdJuego = documentSnapshot.getId();
+                                PojoPartida Cola = documentSnapshot.toObject(PojoPartida.class);
+                                GamerTagUnirse = Cola.getNombre();
+                                VistaTablero = Cola.getVistaTablero();
+                                IdJuegoCreado = Cola.getIdJuego();
 
-                                Toast.makeText(activity_lobby.this, "" + VistaTablero,
-                                        Toast.LENGTH_SHORT).show();
+                                db.collection("Juego").document(IdJuegoCreado)
+                                        .update(KEY_JUGADORS, gamertag)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(activity_lobby.this,
+                                                        "Se ha unido a la partida de "
+                                                                + GamerTagUnirse, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
 
                                 Intent i = new Intent(activity_lobby.this, activity_juego.class);
-                                i.putExtra("IdJuego", "" + IdJuego);
+                                i.putExtra("IdJuego", "" + IdJuegoCreado);
                                 i.putExtra("numTablero", VistaTablero);
                                 i.putExtra("tipoJugador", false);
 
                                 startActivity(i);
-
-                                PojoJuego JuegoN = new PojoJuego(GamerTagUnirse, gamertag,
-                                        "Pregunta", "00", false, true);
-
-                                db.collection("Juego").add(JuegoN);
                             }
                         });
-                db.collection("Cola").document(documentSnapshot.getId()).delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(activity_lobby.this, "Se ha unido a la partida de "
-                                        + GamerTagUnirse, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                db.collection("Cola").document(documentSnapshot.getId()).delete();
             }
         });
 
@@ -181,32 +180,31 @@ public class activity_lobby extends AppCompatActivity {
 
     public void clickCrearPartida(View view) {
         Random rand = new Random();
-        VistaTablero = rand.nextInt(5-1) + 1;
+        VistaTablero = rand.nextInt(5 - 1) + 1;
+        PojoJuego Juego = new PojoJuego(gamertag, "", "Pregunta",
+                "00", false, true);
 
-        // Create a new user with a first and last name
-        PojoPartida Partida = new PojoPartida(gamertag, VistaTablero);
-
-        // Add a new document with a generated ID
-        db.collection("Cola")
-                .add(Partida)
+        db.collection("Juego").add(Juego)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        IdJuego = documentReference.getId();
-                        Intent i = new Intent(activity_lobby.this, activity_juego.class);
-                        i.putExtra("IdJuego", IdJuego);
-                        i.putExtra("numTablero", VistaTablero);
-                        i.putExtra("tipoJugador",true);
-                        Toast.makeText(activity_lobby.this, "" + VistaTablero, Toast.LENGTH_SHORT).show();
-
-                        startActivity(i);
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Toast.makeText(activity_lobby.this, "Se ha creado la partida",
+                                Toast.LENGTH_SHORT).show();
+                        IdJuegoCreado = documentReference.getId();
+                        PojoPartida Cola = new PojoPartida(gamertag, VistaTablero, IdJuegoCreado);
+                        db.collection("Cola").add(Cola)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Toast.makeText(activity_lobby.this,
+                                                "Esperando a otro Jugador", Toast.LENGTH_SHORT).show();
+                                        Intent i = new Intent(activity_lobby.this, activity_juego.class);
+                                        i.putExtra("IdJuego", IdJuegoCreado);
+                                        i.putExtra("numTablero", VistaTablero);
+                                        i.putExtra("tipoJugador", true);
+                                        startActivity(i);
+                                    }
+                                });
                     }
                 });
     }

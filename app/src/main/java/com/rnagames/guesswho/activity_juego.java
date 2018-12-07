@@ -23,13 +23,22 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.rnagames.guesswho.Adapter.FichaAdapter;
+import com.rnagames.guesswho.Pojos.PojoJuego;
 import com.rnagames.guesswho.Pojos.Pojo_Personajes;
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 /*
 ?genero
@@ -44,10 +53,20 @@ import java.util.ArrayList;
 
 public class activity_juego extends AppCompatActivity {
 
-    int numeroTablero=1;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    //Datos de Firestore
+    public String JugadorP = "";
+    public String JugadorS = "";
+    public String JugadoresL;
+    public Boolean PartidaEnCurso;
+    public String Pregunta;
+    public Boolean TurnoJp;
+
+    int numeroTablero = 1;
     TextView tvElige;
     RecyclerView rvVista;
-    LinearLayout juegoLayout,dimensionesFoto;
+    LinearLayout juegoLayout, dimensionesFoto;
     Boolean jugadorP;
     FichaAdapter fAdapter;
     Button bAceptar;
@@ -55,51 +74,52 @@ public class activity_juego extends AppCompatActivity {
     TextView tvMiPersonaje;
     ArrayList<Pojo_Personajes> tablero;
     String URLTablero;
-    String miPersonaje,vsPersonaje;
+    String miPersonaje, vsPersonaje;
     String preguntaRecibida;
-    Button bGenero,bTez,bPelo;
+    Button bGenero, bTez, bPelo;
     String idJuego;
     int miPersonajePos;
-    Double width,height,tempTamanos;
+    Double width, height, tempTamanos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Union de componentes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
         fAdapter = new FichaAdapter();
-        tvElige=findViewById(R.id.tvElige);
+        tvElige = findViewById(R.id.tvElige);
         rvVista = findViewById(R.id.rvTablero);
-        dimensionesFoto=findViewById(R.id.dimensionesFoto);
-        juegoLayout=findViewById(R.id.juegoLayout);
-        bAceptar=findViewById(R.id.bConfirmar);
-        ivMiPersonaje=findViewById(R.id.ivMiPersonaje);
-        tvMiPersonaje=findViewById(R.id.tvMiPersonaje);
+        dimensionesFoto = findViewById(R.id.dimensionesFoto);
+        juegoLayout = findViewById(R.id.juegoLayout);
+        bAceptar = findViewById(R.id.bConfirmar);
+        ivMiPersonaje = findViewById(R.id.ivMiPersonaje);
+        tvMiPersonaje = findViewById(R.id.tvMiPersonaje);
         //
 
         //Inicializacion de variables
         juegoLayout.setVisibility(View.INVISIBLE);
         Bundle getGameInfo = getIntent().getExtras();
-        jugadorP=getGameInfo.getBoolean("tipoJugador");
-        numeroTablero=getGameInfo.getInt("numTablero");
-        idJuego=getGameInfo.getString("IdJuego");
-        URLTablero="https://guess-who-223421.appspot.com/vista_"+numeroTablero+".php";
+        jugadorP = getGameInfo.getBoolean("tipoJugador");
+        numeroTablero = getGameInfo.getInt("numTablero");
+        idJuego = getGameInfo.getString("IdJuego");
+        URLTablero = "https://guess-who-223421.appspot.com/vista_" + numeroTablero + ".php";
         //
 
         //Relacionado con tamaño de vistas
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        width = (double)size.x;
+        width = (double) size.x;
         height = (double) size.y;
-        width=width-(width*.05);
-        height=height-(height*0.05);
-        ViewGroup.LayoutParams recyclerSize=rvVista.getLayoutParams();
-        tempTamanos=width*0.70;
-        recyclerSize.width=tempTamanos.intValue();
-        recyclerSize.height= height.intValue();
-        ViewGroup.LayoutParams leftBar=dimensionesFoto.getLayoutParams();
-        tempTamanos=width-recyclerSize.width;
-        leftBar.width=tempTamanos.intValue();
+        width = width - (width * .05);
+        height = height - (height * 0.05);
+        ViewGroup.LayoutParams recyclerSize = rvVista.getLayoutParams();
+        tempTamanos = width * 0.70;
+        recyclerSize.width = tempTamanos.intValue();
+        recyclerSize.height = height.intValue();
+        ViewGroup.LayoutParams leftBar = dimensionesFoto.getLayoutParams();
+        tempTamanos = width - recyclerSize.width;
+        leftBar.width = tempTamanos.intValue();
         //
 
         //Configuracion de Layout del Recyclerview
@@ -112,11 +132,11 @@ public class activity_juego extends AppCompatActivity {
         //Inicializacion de adapter y recycler
         tablero = new ArrayList<>();
         fAdapter.contexto = this;
-        fAdapter.widthRecyler=recyclerSize.width;
-        fAdapter.heightRecycler=recyclerSize.height;
-        fAdapter.juego=true;
-        fAdapter.juegoEmpezado=false;
-        fAdapter.datos=tablero;
+        fAdapter.widthRecyler = recyclerSize.width;
+        fAdapter.heightRecycler = recyclerSize.height;
+        fAdapter.juego = true;
+        fAdapter.juegoEmpezado = false;
+        fAdapter.datos = tablero;
         rvVista.setAdapter(fAdapter);
         rvVista.setLayoutManager(layoutManager);
         rvVista.getLayoutManager().findViewByPosition(1);
@@ -162,8 +182,28 @@ public class activity_juego extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        db.collection("Juego").document(idJuego)
+                .addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        PojoJuego JuegoActual = documentSnapshot.toObject(PojoJuego.class);
+                        JugadorP = JuegoActual.getJugadorP();
+                        JugadorS = JuegoActual.getJugadorS();
+                        JugadoresL = JuegoActual.getJugadoresL();
+                        PartidaEnCurso = JuegoActual.getPartidaEnCurso();
+                        Pregunta = JuegoActual.getPregunta();
+                        TurnoJp = JuegoActual.getTurnoJP();
+
+                    }
+                });
+    }
+
+
     public void getTablero() {
-        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET, URLTablero,null,
+        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET, URLTablero, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -174,23 +214,26 @@ public class activity_juego extends AppCompatActivity {
                                 Pojo_Personajes personaje = new Pojo_Personajes();
                                 personaje.setPersonaje_ID(Integer.parseInt(jsonObject.getString("Personaje_ID")));
                                 personaje.setNombre(jsonObject.getString("Nombre"));
-                                if(jsonObject.getString("Genero_Masculino").equals("0")){
+                                if (jsonObject.getString("Genero_Masculino").equals("0")) {
                                     personaje.setGenero_Masculino(false);
-                                }else{personaje.setGenero_Masculino(true);
+                                } else {
+                                    personaje.setGenero_Masculino(true);
                                 }
-                                if(jsonObject.getString("Estudiante").equals("0")){
+                                if (jsonObject.getString("Estudiante").equals("0")) {
                                     personaje.setEstudiante(false);
-                                }else{personaje.setEstudiante(true);
+                                } else {
+                                    personaje.setEstudiante(true);
                                 }
-                                if(jsonObject.getString("Lentes").equals("0")){
+                                if (jsonObject.getString("Lentes").equals("0")) {
                                     personaje.setLentes(false);
-                                }else{personaje.setLentes(true);
+                                } else {
+                                    personaje.setLentes(true);
                                 }
                                 personaje.setColor_Ojos(jsonObject.getString("FK_ColorOjos"));
                                 personaje.setColor_Piel(jsonObject.getString("FK_ColorPiel"));
                                 personaje.setColor_Cabello(jsonObject.getString("FK_ColorCabello"));
 
-                                personaje.setURL_Foto(personaje.getURL_Foto()+jsonObject.getString("Foto"));
+                                personaje.setURL_Foto(personaje.getURL_Foto() + jsonObject.getString("Foto"));
                                 tablero.add(personaje);
 
                                 fAdapter.notifyDataSetChanged();
@@ -218,71 +261,79 @@ public class activity_juego extends AppCompatActivity {
         pide.add(postRequest);
     }
 
-    public void startGame(View view){
-        if(!fAdapter.personajeElegido.equals("kk")) {
-            fAdapter.juegoEmpezado=true;
-            miPersonaje=fAdapter.personajeElegido;
+    public void startGame(View view) {
+        if (!fAdapter.personajeElegido.equals("kk")) {
+            fAdapter.juegoEmpezado = true;
+            miPersonaje = fAdapter.personajeElegido;
             //AGREGAR subir al firebase nombre, dependiendo si es el uno o dos
             bAceptar.setVisibility(View.INVISIBLE);
             juegoLayout.setVisibility(View.VISIBLE);
             tvElige.setVisibility(View.INVISIBLE);
             //Toast.makeText(this, personajes.get(0).getNombre(), Toast.LENGTH_SHORT).show();
             encontrarPersonaje();
-        }else{
+        } else {
             Toast.makeText(this, "Elige ha un personaje antes.", Toast.LENGTH_SHORT).show();
         }
     }
+
     public void encontrarPersonaje() {
-        for (int i=0;i<tablero.size();i++){
-            if(tablero.get(i).getNombre()==miPersonaje){
-                miPersonajePos=i;
+        for (int i = 0; i < tablero.size(); i++) {
+            if (tablero.get(i).getNombre() == miPersonaje) {
+                miPersonajePos = i;
                 break;
             }
 
         }
-    Picasso.get()
-            .load(tablero.get(miPersonajePos).getURL_Foto())
-            .into(ivMiPersonaje);
+        Picasso.get()
+                .load(tablero.get(miPersonajePos).getURL_Foto())
+                .into(ivMiPersonaje);
         tvMiPersonaje.setText(tablero.get(miPersonajePos).getNombre());
 
-}
-boolean getMiGeneroMasculino(Boolean genero){
+    }
 
-     return genero;
-}
-boolean getMiTezMoreno(String tez){
-        if(tez.equals("7F5E5E")) {
+    boolean getMiGeneroMasculino(Boolean genero) {
+
+        return genero;
+    }
+
+    boolean getMiTezMoreno(String tez) {
+        if (tez.equals("7F5E5E")) {
             return true;
-        }else{
+        } else {
             return false;
         }
-}
-boolean getMiPeloCafe(String peloCafe){
-        if(peloCafe.equals("281F1F")) {
+    }
+
+    boolean getMiPeloCafe(String peloCafe) {
+        if (peloCafe.equals("281F1F")) {
             return true;
-        }else{
+        } else {
             return false;
         }
-}
-boolean getMiPeloTratado(String peloTratado){
-        if(peloTratado.equals("FFFFFF")) {
+    }
+
+    boolean getMiPeloTratado(String peloTratado) {
+        if (peloTratado.equals("FFFFFF")) {
             return true;
-        }else{
+        } else {
             return false;
         }
-}
-boolean getMisOjosClaros(String ojosClaros){
-        if(ojosClaros.equals("281F1F")) {
+    }
+
+    boolean getMisOjosClaros(String ojosClaros) {
+        if (ojosClaros.equals("281F1F")) {
             return false;
-        }else{
+        } else {
             return true;
         }
-}
-boolean getMisLentes(Boolean lentes  ){
+    }
+
+    boolean getMisLentes(Boolean lentes) {
 
         return lentes;
-}
-boolean getMiEstudianteCeti(Boolean estudianteCeti){
-        return estudianteCeti;
-}
     }
+
+    boolean getMiEstudianteCeti(Boolean estudianteCeti) {
+        return estudianteCeti;
+    }
+}
