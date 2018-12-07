@@ -66,6 +66,8 @@ public class activity_juego extends AppCompatActivity {
     private static final String KEY_TURNOJP = "turnoJP";
     private static final String KEY_PARTIDAENCURSO = "partidaEnCurso";
     private static final String KEY_ACTIVARBOTON = "activarBoton";
+    private static final String KEY_PERSONAJEP = "personajeP";
+    private static final String KEY_PERSONAJES = "personajeS";
 
     //Datos de Firestore
     public String JugadorP = "";
@@ -94,6 +96,8 @@ public class activity_juego extends AppCompatActivity {
     ArrayList<Pojo_Personajes> tablero;
     String URLTablero;
     String miPersonaje, vsPersonaje;
+    String PersonajeAdivinar;
+    String PersonajeP,PersonajeS;
     String preguntaRecibida;
     String idJuego;
     String gamertag;
@@ -226,6 +230,8 @@ public class activity_juego extends AppCompatActivity {
                         Pregunta = JuegoActual.getPregunta();
                         TurnoJp = JuegoActual.getTurnoJP();
                         ActivarPreguntas = JuegoActual.getActivarBoton();
+                        PersonajeP = JuegoActual.getPersonajeP();
+                        PersonajeS = JuegoActual.getPersonajeS();
 
                         if (jugadorP) {
                             if (JugadoresL.equals("01")) {
@@ -382,6 +388,39 @@ public class activity_juego extends AppCompatActivity {
         }
     }
 
+    public void clickAdivinar(View view){
+        fAdapter.adivinar=true;
+        PersonajeAdivinar = fAdapter.personajeAdivinado;
+
+        if (jugadorP){
+            if (PersonajeAdivinar.equals(PersonajeS)) {
+                Toast.makeText(this,"Ha ganado!",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this,"Siga intentando!",Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            if (PersonajeAdivinar.equals(PersonajeP)){
+                Toast.makeText(this,"Ha ganado!",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this,"Siga intentando!",Toast.LENGTH_SHORT).show();
+            }
+        }
+        CambiarTurno();
+
+        Toast.makeText(this,""+PersonajeAdivinar,Toast.LENGTH_SHORT).show();
+    }
+
+    public void CambiarTurno() {
+        if (TurnoJp) {
+            db.collection("Juego").document(idJuego)
+                    .update(KEY_TURNOJP, false);
+        } else {
+            db.collection("Juego").document(idJuego)
+                    .update(KEY_TURNOJP, true);
+        }
+    }
+
     public void Preguntas() {
         Intent i = new Intent(this, PreguntaPU.class);
         preguntaRecibida = Pregunta;
@@ -523,6 +562,14 @@ public class activity_juego extends AppCompatActivity {
             //Toast.makeText(activity_juego.this,""+JugadoresL,Toast.LENGTH_SHORT).show();
             fAdapter.juegoEmpezado = true;
             miPersonaje = fAdapter.personajeElegido;
+            if (jugadorP){
+                db.collection("Juego").document(idJuego)
+                        .update(KEY_PERSONAJEP,miPersonaje);
+            }else{
+                db.collection("Juego").document(idJuego)
+                        .update(KEY_PERSONAJES,miPersonaje);
+            }
+
             //AGREGAR subir al firebase nombre, dependiendo si es el uno o dos
             bAceptar.setVisibility(View.INVISIBLE);
             juegoLayout.setVisibility(View.VISIBLE);
