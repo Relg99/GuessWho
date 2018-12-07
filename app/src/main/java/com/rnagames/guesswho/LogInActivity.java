@@ -23,10 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LogInActivity extends AppCompatActivity {
+
     public String URL = "https://guess-who-223421.appspot.com/login.php";
-    EditText etUsuario, etPass;
-    TextView tvLoginError;
-    boolean loginCorrecto=false;
+    public EditText etUsuario, etPass;
+    public TextView tvLoginError;
+    boolean loginCorrecto = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,42 +37,36 @@ public class LogInActivity extends AppCompatActivity {
 
         etUsuario = findViewById(R.id.etUsuario);
         etPass = findViewById(R.id.etContraseña);
-        tvLoginError=findViewById(R.id.tvLoginError);
+        tvLoginError = findViewById(R.id.tvLoginError);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        getWindow().setLayout((int) (WindowManager.LayoutParams.WRAP_CONTENT), (int) (WindowManager.LayoutParams.WRAP_CONTENT));
+        getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     public void clickInicioSesion(View view) {
         tvLoginError.setText("");
-
         if (etPass.getText().toString().equals("") || etUsuario.getText().toString().equals("")) {
             tvLoginError.setText("No dejes espacios vacíos.");
-
         } else {
-
-
             StringRequest postRequest = new StringRequest(Request.Method.POST, URL,
-                    new Response.Listener<String>()
-                    {
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                        if(response.equals("1")){
-                            loginCorrecto=true;
-                            Intent i = new Intent(LogInActivity.this, MenuActivity.class);
-                            i.putExtra("gamertag", etUsuario.getText().toString());
-                            i.putExtra("lobby",1);
-                            i.putExtra("usuarioEnviado",1);
+                            if (response.equals("1")) {
+                                loginCorrecto = true;
+                                Intent i = new Intent(LogInActivity.this, MenuActivity.class);
+                                i.putExtra("gamertag", etUsuario.getText().toString());
+                                i.putExtra("lobby", 1);
+                                i.putExtra("usuarioEnviado", 1);
 
-                            startActivity(i);
-                        }else{
-                            tvLoginError.setText("Verifica tus credenciales.");
-                        }
+                                startActivity(i);
+                            } else {
+                                tvLoginError.setText("Verifica tus credenciales.");
+                            }
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // error
@@ -78,9 +75,8 @@ public class LogInActivity extends AppCompatActivity {
                     }
             ) {
                 @Override
-                protected Map<String, String> getParams()
-                {
-                    Map<String, String>  params = new HashMap<String, String>();
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
                     params.put("gamertag", etUsuario.getText().toString());
                     params.put("contraseña", etPass.getText().toString());
 
@@ -89,21 +85,14 @@ public class LogInActivity extends AppCompatActivity {
             };
             RequestQueue pide = Volley.newRequestQueue(this);
 
-              pide.add(postRequest);
+            pide.add(postRequest);
         }
 
 
     }
 
-    public void clickRegistro (View view) {
-        try {
+    public void clickRegistro(View view) {
             Intent i = new Intent(this, RegistroActivity.class);
             startActivity(i);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(this,"Ingrese datos.",Toast.LENGTH_SHORT).show();
-        }
-
     }
 }

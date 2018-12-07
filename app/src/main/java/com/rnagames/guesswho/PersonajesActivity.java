@@ -35,7 +35,7 @@ public class PersonajesActivity extends AppCompatActivity {
     Double width;
     Double height;
     // Datos OrigenDatos;
-    LinearLayoutManager llmOrientacion;
+    //LinearLayoutManager llmOrientacion;
     ArrayList<Pojo_Personajes> arreglo;
 
     @Override
@@ -47,7 +47,7 @@ public class PersonajesActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        width = (double)size.x;
+        width = (double) size.x;
         height = (double) size.y;
 
         fAdapter = new FichaAdapter();
@@ -58,21 +58,18 @@ public class PersonajesActivity extends AppCompatActivity {
         layoutManager.setJustifyContent(JustifyContent.CENTER);
         layoutManager.setFlexWrap(FlexWrap.WRAP);
         arreglo = new ArrayList<>();
-        fAdapter.juego=false;
-        fAdapter.widthRecyler=width.intValue();
-        fAdapter.heightRecycler=height.intValue();
+        fAdapter.juego = false;
+        fAdapter.widthRecyler = width.intValue();
+        fAdapter.heightRecycler = height.intValue();
 
         fAdapter.contexto = this;
-        fAdapter.datos=arreglo;
+        fAdapter.datos = arreglo;
         rvVista.setAdapter(fAdapter);
         rvVista.setLayoutManager(layoutManager);
         mostrar();
-
-
-
     }
 
-    public void mostrar(){
+    public void mostrar() {
         JsonArrayRequest peticion = new JsonArrayRequest(
                 Request.Method.GET,
                 "https://guess-who-223421.appspot.com/selectFotos.php",
@@ -86,7 +83,7 @@ public class PersonajesActivity extends AppCompatActivity {
 
                                 Pojo_Personajes personaje = new Pojo_Personajes();
                                 personaje.setNombre(jsonObject.getString("Nombre"));
-                                personaje.setURL_Foto(personaje.getURL_Foto()+jsonObject.getString("Foto"));
+                                personaje.setURL_Foto(personaje.getURL_Foto() + jsonObject.getString("Foto"));
                                 //Toast.makeText(PersonajesActivity.this,personaje.getURL_Foto()+jsonObject.getString("Foto") , Toast.LENGTH_SHORT).show();
 
                                 arreglo.add(personaje);
@@ -94,23 +91,19 @@ public class PersonajesActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
                     }
-
-
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(PersonajesActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(PersonajesActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
         );
-
         RequestQueue pide = Volley.newRequestQueue(this);
         pide.add(peticion);
-
     }
+
+
 }

@@ -16,31 +16,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MenuActivity extends AppCompatActivity {
-//IP: 35.232.124.181
+    //IP: 35.232.124.181
+
     private static final String TAG = "MENSAJEEEE";
     public String gamertag;
     public int res = 1;
     public Button bRegistro;
     public boolean sesionIniciada;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        bRegistro = findViewById(R.id.bRegistro);
-        sesionIniciada=false;
 
-            Bundle recibirUsuario = getIntent().getExtras();
-            checkInicioSesion(recibirUsuario);
+        bRegistro = findViewById(R.id.bRegistro);
+        sesionIniciada = false;
+
+        Bundle recibirUsuario = getIntent().getExtras();
+        checkInicioSesion(recibirUsuario);
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
-        DatabaseReference animalRef = database.getReference("Animal/Gato");
-        DatabaseReference crearPartidaRef = database.getReference("Juego/" + "");
+        //DatabaseReference animalRef = database.getReference("Animal/Gato");
+        //DatabaseReference crearPartidaRef = database.getReference("Juego/" + "");
 
-        animalRef.setValue("Blanco");
-        crearPartidaRef.setValue(1);
+        //animalRef.setValue("Blanco");
+        //crearPartidaRef.setValue(1);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,8 +51,6 @@ public class MenuActivity extends AppCompatActivity {
                 String value = dataSnapshot.getValue(String.class);
                 Log.d(TAG, "Value is: " + value);
             }
-
-//WWAA
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -62,13 +62,9 @@ public class MenuActivity extends AppCompatActivity {
 
 
     public void clikJugar(View view) {
-        if (sesionIniciada == false) {
-            try {
-                Intent i = new Intent(this, LogInActivity.class);
-                startActivity(i);
-            } catch (Exception e) {
-                Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
-            }
+        if (!sesionIniciada) {
+            Intent i = new Intent(this, LogInActivity.class);
+            startActivity(i);
         } else {
             Intent i = new Intent(this, activity_lobby.class);
             i.putExtra("gamertag", gamertag);
@@ -77,13 +73,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void clikRegistro(View view) {
-        if (sesionIniciada == false) {
-            try {
-                Intent i = new Intent(this, RegistroActivity.class);
-                startActivity(i);
-            } catch (Exception e) {
-                Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
-            }
+        if (!sesionIniciada) {
+            Intent i = new Intent(this, RegistroActivity.class);
+            startActivity(i);
         } else {
             bRegistro.setText("Registro");
             sesionIniciada = false;
@@ -93,50 +85,30 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void clickLeaderboard(View view) {
-        try {
-
-            Intent i = new Intent(this, LeaderboardActivity.class);
-            // i.putExtra("facnum", res);
-            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
-
-            startActivity(i);
-        } catch (Exception e) {
-            Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
-        }
-
+        Intent i = new Intent(this, LeaderboardActivity.class);
+        startActivity(i);
     }
 
     public void clickPersonajes(View view) {
-        try {
-            Intent i = new Intent(this, PersonajesActivity.class);
-            // i.putExtra("facnum", res);
-            // Toast.makeText(this,""+res,Toast.LENGTH_SHORT).show();
-
-            startActivity(i);
-        } catch (Exception e) {
-            Toast.makeText(this, "Ingrese datos.", Toast.LENGTH_SHORT).show();
-        }
-
+        Intent i = new Intent(this, PersonajesActivity.class);
+        startActivity(i);
     }
 
     public void checkInicioSesion(Bundle recibirUsuario) {
-
-    if(recibirUsuario!=null) {
-        if (recibirUsuario.getInt("usuarioEnviado") == 1) {
-            gamertag = recibirUsuario.getString("gamertag");
-            sesionIniciada = true;
-            bRegistro.setText("Cerrar Sesion");
-            if (recibirUsuario.getInt("lobby") == 1) {
-                Intent i = new Intent(MenuActivity.this, activity_lobby.class);
-                i.putExtra("gamertag", gamertag);
-                Log.d("Llegue","Llegue");
-                startActivity(i);
+        if (recibirUsuario != null) {
+            if (recibirUsuario.getInt("usuarioEnviado") == 1) {
+                gamertag = recibirUsuario.getString("gamertag");
+                sesionIniciada = true;
+                bRegistro.setText("Cerrar Sesion");
+                if (recibirUsuario.getInt("lobby") == 1) {
+                    Intent i = new Intent(MenuActivity.this, activity_lobby.class);
+                    i.putExtra("gamertag", gamertag);
+                    Log.d("Llegue", "Llegue");
+                    startActivity(i);
+                }
             }
         }
     }
-
-        }
-
 
 
 }
