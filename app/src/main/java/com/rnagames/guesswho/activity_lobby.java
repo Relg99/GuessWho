@@ -183,7 +183,7 @@ public class activity_lobby extends AppCompatActivity {
         Random rand = new Random();
         VistaTablero = rand.nextInt(5 - 1) + 1;
         PojoJuego Juego = new PojoJuego(gamertag, "", "Pregunta",
-                "00", false, true,true);
+                "00", false, true,true,"","");
 
         db.collection("Juego").add(Juego)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

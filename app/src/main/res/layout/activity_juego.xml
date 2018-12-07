@@ -137,6 +137,7 @@
 
                 <ImageView
                     android:id="@+id/bAdivinar"
+                    android:onClick="clickAdivinar"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:src="@drawable/guess"
