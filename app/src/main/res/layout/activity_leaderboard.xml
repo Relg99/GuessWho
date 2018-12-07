@@ -1,10 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LeaderboardActivity">
+    tools:context=".LeaderboardActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LEADERBOARD"
+            android:textSize="40sp"
 
+            />
+    <!--
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_gravity="left"
+
+       >
+
+   <TextView
+       android:gravity="left"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Partida_ID"
+       android:layout_marginHorizontal="10dp"
+
+       />
+       <TextView
+           android:gravity="left"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Ganador"
+
+           />
+       <TextView
+           android:gravity="left"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Perdedor"
+
+           />
+   </LinearLayout>
+   -->
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rvLeaderboard"
+        />
 </LinearLayout>

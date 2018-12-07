@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CaracteristicasActivity"
+    android:orientation="vertical"
+    android:background="@drawable/caracteristicasbackground"
+
+    >
+
+    <TextView
+    android:id="@+id/tvcolorOjos"
+    android:textSize="20sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/ivPersonajeCaracteristica"
+    android:layout_centerHorizontal="true"
+    android:text="Ojos oscuros"
+    android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvcolorCabello"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvcolorOjos"
+        android:layout_centerHorizontal="true"
+        android:text="Pelo Castaño"
+        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/ivPersonajeCaracteristica"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/adriana"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+
+        />
+
+
+    <TextView
+        android:id="@+id/tvProfesionGenero"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivPersonajeCaracteristica"
+        android:layout_centerHorizontal="true"
+        android:text="Estudiante: Mujer"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvNombreCaracteristica"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfesionGenero"
+        android:layout_centerHorizontal="true"
+        android:text="Adriana"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvColorpiel"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNombreCaracteristica"
+        android:layout_centerHorizontal="true"
+        android:text="Tez blanca"
+        android:textStyle="bold" />
+    <TextView
+    android:id="@+id/tvLentes"
+    android:textSize="20sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/tvColorpiel"
+    android:layout_centerHorizontal="true"
+    android:text="No usa lentes"
+    android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvRegistroCaracteristica"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLentes"
+        android:layout_centerHorizontal="true"
+        android:text="Registro:1"
+        android:textStyle="bold" />
+</RelativeLayout>

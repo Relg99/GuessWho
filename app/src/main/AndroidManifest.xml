@@ -41,6 +41,10 @@
             android:name=".PreguntaPU"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Custom" />
+        <activity
+            android:name=".CaracteristicasActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Custom" />
     </application>
 
 </manifest>

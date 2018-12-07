@@ -1,6 +1,7 @@
 package com.rnagames.guesswho.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
@@ -17,6 +18,9 @@ import android.widget.Toast;
 
 
 import com.lb.auto_fit_textview.AutoResizeTextView;
+import com.rnagames.guesswho.CaracteristicasActivity;
+import com.rnagames.guesswho.LogInActivity;
+import com.rnagames.guesswho.MenuActivity;
 import com.rnagames.guesswho.Pojos.Pojo_Personajes;
 import com.rnagames.guesswho.R;
 import com.rnagames.guesswho.activity_juego;
@@ -74,7 +78,6 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(contexto, "Presiono", Toast.LENGTH_SHORT).show();
                 holder.tvpersonajeNombre.getTag();
                 holder.llTarjeta.getTag();
                 holder.personaje.getTag();
@@ -103,7 +106,18 @@ public class FichaAdapter extends RecyclerView.Adapter <FichaAdapter.FichaHolder
                     }
 
                 }else{
-                    //Abrir caracteristicas de personaje
+                    Intent i = new Intent(contexto, CaracteristicasActivity.class);
+                    i.putExtra("ID",datos.get(position).getPersonaje_ID());
+                    i.putExtra("Nombre", datos.get(position).getNombre());
+                    i.putExtra("Genero", datos.get(position).isGenero_Masculino());
+                    i.putExtra("Estudiante", datos.get(position).isEstudiante());
+                    i.putExtra("Lentes", datos.get(position).isLentes());
+                    i.putExtra("Ojos", datos.get(position).getColor_Ojos());
+                    i.putExtra("Piel", datos.get(position).getColor_Piel());
+                    i.putExtra("Cabello", datos.get(position).getColor_Cabello());
+                    i.putExtra("Foto", datos.get(position).getURL_Foto());
+
+                    contexto.startActivity(i);
                 }
             }
         });

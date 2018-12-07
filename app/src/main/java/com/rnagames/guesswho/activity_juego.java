@@ -392,7 +392,7 @@ public class activity_juego extends AppCompatActivity {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 Pojo_Personajes personaje = new Pojo_Personajes();
-                                personaje.setPersonaje_ID(Integer.parseInt(jsonObject.getString("Personaje_ID")));
+                                personaje.setPersonaje_ID(jsonObject.getString("Personaje_ID"));
                                 personaje.setNombre(jsonObject.getString("Nombre"));
                                 if (jsonObject.getString("Genero_Masculino").equals("0")) {
                                     personaje.setGenero_Masculino(false);

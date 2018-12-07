@@ -72,7 +72,7 @@ public class PersonajesActivity extends AppCompatActivity {
     public void mostrar() {
         JsonArrayRequest peticion = new JsonArrayRequest(
                 Request.Method.GET,
-                "https://guess-who-223421.appspot.com/selectFotos.php",
+                "https://guess-who-223421.appspot.com/selectPersonaje.php",
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -82,8 +82,32 @@ public class PersonajesActivity extends AppCompatActivity {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 Pojo_Personajes personaje = new Pojo_Personajes();
+                                personaje.setPersonaje_ID(jsonObject.getString("Personaje_ID"));
                                 personaje.setNombre(jsonObject.getString("Nombre"));
+                                if(jsonObject.getString("Genero_Masculino").equals("0")) {
+                                    personaje.setGenero_Masculino(false);
+                                }else{
+                                    personaje.setGenero_Masculino(true);
+
+                                }
+                                if(jsonObject.getString("Estudiante").equals("0")) {
+                                    personaje.setEstudiante(false);
+                                }else{
+                                    personaje.setEstudiante(true);
+
+                                }
+                                if(jsonObject.getString("Lentes").equals("0")) {
+                                    personaje.setLentes(false);
+                                }else{
+                                    personaje.setLentes(true);
+                                }
+                                personaje.setColor_Ojos(jsonObject.getString("FK_ColorOjos"));
+                                personaje.setColor_Piel(jsonObject.getString("FK_ColorPiel"));
+
+                                personaje.setColor_Cabello(jsonObject.getString("FK_ColorCabello"));
+
                                 personaje.setURL_Foto(personaje.getURL_Foto() + jsonObject.getString("Foto"));
+
                                 //Toast.makeText(PersonajesActivity.this,personaje.getURL_Foto()+jsonObject.getString("Foto") , Toast.LENGTH_SHORT).show();
 
                                 arreglo.add(personaje);

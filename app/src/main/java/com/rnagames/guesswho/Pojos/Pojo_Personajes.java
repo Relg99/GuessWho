@@ -3,7 +3,7 @@ package com.rnagames.guesswho.Pojos;
 
 
 public class Pojo_Personajes {
-    private int Personaje_ID;
+    private String Personaje_ID;
     private String Nombre;
     private boolean Genero_Masculino;
     private boolean Estudiante;
@@ -14,7 +14,7 @@ public class Pojo_Personajes {
     private String URL_Foto;
 
     public Pojo_Personajes() {
-        Personaje_ID = 0;
+        Personaje_ID = "0";
         Nombre = "Default";
         Genero_Masculino = true;
         Estudiante = true;
@@ -26,11 +26,11 @@ public class Pojo_Personajes {
 
     }
 
-    public int getPersonaje_ID() {
+    public String getPersonaje_ID() {
         return Personaje_ID;
     }
 
-    public void setPersonaje_ID(int personaje_ID) {
+    public void setPersonaje_ID(String personaje_ID) {
         Personaje_ID = personaje_ID;
     }
 
