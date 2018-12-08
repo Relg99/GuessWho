@@ -59,6 +59,7 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:onClick="clickLeaderboard"
             android:id="@+id/bLeaderBoard"
             android:paddingHorizontal="10dp"
             android:text="@string/bLeaderboard"

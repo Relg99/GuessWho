@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity_lobby"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    >
 
     <LinearLayout
     android:layout_width="match_parent"
@@ -40,7 +42,11 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:onClick="clickCrearPartida"
-            android:text="Crear Partida" />
+            android:text="Crear Partida"
+            android:background="@drawable/button"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            />
 
 
         <android.support.v7.widget.RecyclerView

@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".activity_juego">
+    tools:context=".activity_juego"
+    android:background="@drawable/background"
+    >
 
 
 
@@ -171,7 +173,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="startGame"
-        android:text="Aceptar" />
+        android:text="Aceptar"
+        android:background="@drawable/button"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        />
 </RelativeLayout>
 
 
